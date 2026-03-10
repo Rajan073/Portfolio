@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -22,29 +21,26 @@ overflow-x:hidden;
 }
 
 /* MAIN CONTAINER */
-
 .container{
 min-height:100vh;
 display:grid;
 grid-template-columns:40% 60%;
-background:url("Cockpit view F58.jpg") center/cover no-repeat;
+/* PATH UPDATED: Now looks inside the 'images' folder */
+background:url("images/Cockpit%20view%20F58.jpg") center/cover no-repeat;
+background-attachment: fixed; /* Keeps background still while scrolling */
 }
 
 /* LEFT PANEL */
-
 .left{
 padding:60px;
 display:flex;
 flex-direction:column;
 justify-content:center;
-
 background:rgba(255,255,255,0.08);
-backdrop-filter:blur(5px);
--webkit-backdrop-filter:blur(5px);
-
+backdrop-filter:blur(15px);
+-webkit-backdrop-filter:blur(15px);
 border-right:1px solid rgba(255,255,255,0.2);
 box-shadow:0 0 40px rgba(0,0,0,0.35);
-
 color:white;
 border-radius:0 25px 25px 0;
 }
@@ -75,6 +71,9 @@ padding:12px 25px;
 width:200px;
 cursor:pointer;
 transition:0.3s;
+text-decoration: none;
+display: inline-block;
+text-align: center;
 }
 
 .btn:hover{
@@ -83,7 +82,6 @@ color:black;
 }
 
 /* RIGHT SIDE */
-
 .right{
 position:relative;
 }
@@ -107,19 +105,6 @@ color:white;
 animation:float 2s infinite;
 }
 
-.network{
-position:absolute;
-bottom:20px;
-right:20px;
-background:rgba(0,0,0,0.6);
-color:white;
-padding:10px 14px;
-border-radius:10px;
-font-size:12px;
-}
-
-/* SCROLL ANIMATION */
-
 @keyframes float{
 0%{transform:translate(-50%,0)}
 50%{transform:translate(-50%,12px)}
@@ -127,85 +112,56 @@ font-size:12px;
 }
 
 /* TABLET */
-
 @media(max-width:900px){
-
 .container{
 grid-template-columns:1fr;
 }
-
 .left{
 border-radius:0;
 text-align:center;
 align-items:center;
 padding:40px 25px;
+height: 100vh;
+background: rgba(0,0,0,0.4); /* Darker overlay for mobile readability */
 }
-
 .left h1{
 font-size:48px;
 line-height:48px;
 }
-
 }
 
 /* MOBILE */
-
 @media(max-width:500px){
-
 .left h1{
 font-size:36px;
 line-height:38px;
 }
-
 .left p{
 font-size:14px;
 }
-
 .btn{
 width:160px;
 padding:10px 18px;
 }
-
 .logo{
 margin-bottom:25px;
 }
-
 }
-
 </style>
 </head>
 
 <body>
-
 <div class="container">
-
-<div class="left">
-
-<div class="logo">RAJAN JAIN</div>
-
-<h1>
-FLIGHT<br>
-DESIGN
-</h1>
-
-<p>
-This portfolio showcases my aerospace engineering projects including UAV design,
-pulsejet engines, structural analysis, rocket testing and flight experimentation.
-</p>
-
-<button class="btn">Explore Projects →</button>
-
+    <div class="left">
+        <div class="logo">RAJAN JAIN</div>
+        <h1>FLIGHT<br>DESIGN</h1>
+        <p>This portfolio showcases my aerospace engineering projects including UAV design, pulsejet engines, structural analysis, rocket testing and flight experimentation.</p>
+        <a href="#" class="btn">Explore Projects →</a>
+    </div>
+    <div class="right">
+        <div class="menu">☰</div>
+        <div class="scroll">⌄</div>
+    </div>
 </div>
-
-<div class="right">
-
-<div class="menu">☰</div>
-
-<div class="scroll">⌄</div>
-
-</div>
-
-</div>
-
 </body>
 </html>
