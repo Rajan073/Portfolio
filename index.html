@@ -3,55 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rajan Jain | Aerospace Portfolio</title>
+<title>Rajan Jain | Aerospace Design</title>
 
 <!-- External Libraries -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<!-- 3D Model Viewer Library -->
+<!-- Optimized 3D Viewer -->
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
 <style>
 :root {
     --accent: #7fb3b3;
-    --dark-bg: #0a0a0c;
+    --glass: rgba(255, 255, 255, 0.05);
+    --blur: blur(12px);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-body { background: var(--dark-bg); color: white; scroll-behavior: smooth; overflow-x: hidden; }
+body { background: #050505; color: white; scroll-behavior: smooth; overflow-x: hidden; }
 
-/* 1. BACKGROUND WALLPAPER FADE */
+/* 1. BACKGROUND LAYER */
 .wallpaper-layer {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: url("images/bg.png") center/cover no-repeat;
     z-index: -1;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s linear;
+    will-change: opacity;
 }
 
-/* 2. MENU OVERLAY */
-.nav-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.96);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.5s;
-}
-.nav-overlay.active { visibility: visible; opacity: 1; }
-.nav-overlay a {
-    color: white; font-size: 35px; font-weight: 700; text-decoration: none;
-    margin: 15px; transition: 0.3s; letter-spacing: 2px;
-}
-.nav-overlay a:hover { color: var(--accent); transform: scale(1.1); }
-.close-menu { position: absolute; top: 30px; right: 30px; font-size: 40px; cursor: pointer; }
-
-/* 3. HERO SECTION */
+/* 2. HERO SECTION */
 .hero {
     height: 100vh;
     display: grid;
@@ -64,213 +44,233 @@ body { background: var(--dark-bg); color: white; scroll-behavior: smooth; overfl
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border-right: 1px solid rgba(255,255,255,0.1);
 }
 
-.logo { font-weight: 700; letter-spacing: 2px; margin-bottom: 40px; }
-.left-panel h1 { font-size: 64px; line-height: 1; margin-bottom: 20px; font-weight: 700; }
-.left-panel p { opacity: 0.9; margin-bottom: 35px; max-width: 420px; font-weight: 300; }
+.logo { font-weight: 700; letter-spacing: 2px; margin-bottom: 30px; }
+h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
+.hero p { opacity: 0.8; margin-bottom: 30px; max-width: 380px; font-weight: 300; }
 
-.social-icons { display: flex; gap: 25px; margin-bottom: 40px; }
-.social-icons a { color: white; font-size: 28px; transition: 0.3s; opacity: 0.7; }
-.social-icons a:hover { opacity: 1; transform: translateY(-5px); color: var(--accent); }
+.social-icons { display: flex; gap: 20px; margin-bottom: 30px; }
+.social-icons a { color: white; font-size: 24px; opacity: 0.6; transition: 0.3s; }
+.social-icons a:hover { opacity: 1; color: var(--accent); }
 
 .btn {
-    background: transparent; border: 1px solid white; color: white; padding: 14px 30px;
-    width: 220px; cursor: pointer; transition: 0.3s; text-decoration: none;
-    display: inline-block; text-align: center; font-weight: 600; letter-spacing: 1px;
+    border: 1px solid white; color: white; padding: 12px 25px;
+    text-decoration: none; display: inline-block; text-align: center; font-weight: 600;
+    transition: 0.3s; width: 180px;
 }
 .btn:hover { background: white; color: black; }
 
-/* Fixed Icons */
-.menu-btn { position: fixed; top: 30px; right: 30px; font-size: 32px; cursor: pointer; z-index: 100; }
-.scroll-icon { 
-    position: absolute; bottom: 30px; right: 30%; 
-    font-size: 40px; cursor: pointer; animation: float 2s infinite; 
-}
-
-@keyframes float { 0%, 100% {transform:translateY(0)} 50% {transform:translateY(15px)} }
-
-/* 4. 3D SHOWCASE SECTION */
+/* 3. 3D INTERACTIVE SECTION */
 .showcase {
-    min-height: 120vh;
-    padding: 100px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: var(--dark-bg);
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background: #050505;
+    overflow: hidden;
 }
 
-.showcase h2 { font-size: 45px; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; }
-.showcase .sub { color: var(--accent); margin-bottom: 40px; font-size: 14px; letter-spacing: 2px; }
+/* Translucent Top Header */
+.showcase-header {
+    position: absolute;
+    top: 0; left: 0; width: 100%;
+    padding: 30px;
+    text-align: center;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: var(--blur);
+    z-index: 10;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.showcase-header h2 { font-size: 32px; letter-spacing: 5px; text-transform: uppercase; }
 
 model-viewer {
     width: 100%;
-    height: 75vh;
-    --poster-color: transparent;
+    height: 100%;
+    z-index: 1;
 }
 
-/* 3D Hotspots */
-.hotspot {
-    background: var(--accent); border-radius: 50%; width: 18px; height: 18px;
-    border: none; cursor: pointer; box-shadow: 0 0 15px var(--accent);
+/* Expanding Sidebar Controls */
+.side-controls {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-40%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 20;
 }
-.annotation {
-    background: rgba(0,0,0,0.8); color: #fff; padding: 10px; border-radius: 8px;
-    font-size: 12px; width: 160px; display: none; position: absolute; top: 25px; left: 0;
-}
-.hotspot:hover .annotation { display: block; }
 
-/* Control Buttons */
-.controls-grid {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 40px;
+.part-card {
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 15px 20px;
+    border-radius: 8px;
+    width: 220px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    max-height: 55px; /* Collapsed */
 }
-.part-btn {
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
-    color: white; padding: 12px 24px; border-radius: 4px; cursor: pointer;
-    transition: 0.3s; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
-}
-.part-btn:hover { background: var(--accent); border-color: var(--accent); color: black; font-weight: 700; }
 
-/* MOBILE FIXES */
+.part-card h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
+.part-card p { font-size: 12px; margin-top: 10px; opacity: 0; transition: 0.3s; }
+
+/* Expanded State */
+.part-card.active {
+    max-height: 200px;
+    background: rgba(127, 179, 179, 0.2);
+    border-color: var(--accent);
+}
+.part-card.active p { opacity: 1; }
+
+/* Floating UI Elements */
+.menu-btn { position: fixed; top: 30px; right: 30px; font-size: 28px; cursor: pointer; z-index: 100; opacity: 0.8; }
+.scroll-hint { 
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    font-size: 30px; cursor: pointer; animation: bounce 2s infinite; z-index: 5;
+}
+
+@keyframes bounce { 0%, 100% {transform:translate(-50%, 0)} 50% {transform:translate(-50%, 10px)} }
+
+/* 4. OVERLAY MENU */
+.nav-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.98);
+    z-index: 1000;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    visibility: hidden; opacity: 0; transition: 0.4s;
+}
+.nav-overlay.active { visibility: visible; opacity: 1; }
+.nav-overlay a { color: white; font-size: 30px; text-decoration: none; margin: 15px; font-weight: 600; }
+
+/* MOBILE RESPONSIVENESS */
 @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
-    .left-panel { height: 100vh; width: 100%; text-align: center; align-items: center; padding: 30px; border: none; }
-    .left-panel h1 { font-size: 45px; }
-    .scroll-icon { right: 50%; transform: translateX(50%); }
-    .wallpaper-layer { background-attachment: scroll; }
+    .left-panel { width: 100%; height: 100vh; text-align: center; align-items: center; border: none; }
+    h1 { font-size: 40px; }
+    .side-controls { right: 10px; width: 160px; }
+    .part-card { width: 150px; padding: 10px; }
 }
 </style>
 </head>
 
 <body>
 
-    <!-- Background Wallpaper -->
-    <div class="wallpaper-layer" id="bgWallpaper"></div>
-
-    <!-- ☰ Navigation Trigger -->
+    <div class="wallpaper-layer" id="bg"></div>
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-    <!-- Fullscreen Menu -->
+    <!-- Navigation Menu -->
     <div class="nav-overlay" id="menu">
-        <div class="close-menu" onclick="toggleMenu()">×</div>
+        <span style="position:absolute; top:30px; right:30px; font-size:40px; cursor:pointer;" onclick="toggleMenu()">×</span>
         <a href="#home" onclick="toggleMenu()">HOME</a>
-        <a href="#aircraft" onclick="toggleMenu()">ARC KNIGHT MK2.5</a>
-        <a href="projects.html">ENGINEERING PROJECTS</a>
-        <a href="mailto:rajanjain073@gmail.com">CONTACT ME</a>
+        <a href="#aircraft" onclick="toggleMenu()">ARC KNIGHT 3D</a>
+        <a href="projects.html">ENGINEERING</a>
     </div>
 
-    <!-- HERO SECTION -->
+    <!-- Section 1: Hero -->
     <section class="hero" id="home">
         <div class="left-panel">
             <div class="logo">RAJAN JAIN</div>
             <h1>FLIGHT<br>DESIGN</h1>
-            <p>Aerospace Engineering student specializing in UAV design, propulsion systems, and flight testing.</p>
+            <p>Aerospace Engineering student focused on UAV systems and propulsion optimization.</p>
             
             <div class="social-icons">
-                <a href="https://www.linkedin.com/in/rajan-jain-b55457289/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://www.youtube.com/@rajan-jain-001" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://linkedin.com/in/rajan-jain-b55457289/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://youtube.com/@rajan-jain-001" target="_blank"><i class="fa-brands fa-youtube"></i></a>
                 <a href="mailto:rajanjain073@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-                <a href="https://www.instagram.com/rajanjain_073" target="_blank"><i class="fa-brands fa-instagram"></i></a>
             </div>
             
-            <a href="projects.html" class="btn">Explore Projects →</a>
+            <a href="projects.html" class="btn">View Projects →</a>
         </div>
-        
-        <!-- ⌄ Scroll Trigger -->
-        <div class="scroll-icon" onclick="scrollToAircraft()">⌄</div>
+        <div class="scroll-hint" onclick="document.getElementById('aircraft').scrollIntoView()">⌄</div>
     </section>
 
-    <!-- 3D SHOWCASE SECTION -->
+    <!-- Section 2: 3D Showcase -->
     <section class="showcase" id="aircraft">
-        <h2>Arc Knight Mk2.5</h2>
-        <div class="sub">Next-Gen RC Aircraft Interactive Design</div>
+        <div class="showcase-header">
+            <h2>Arc Knight Mk2.5</h2>
+        </div>
 
-        <model-viewer id="viewer" 
+        <!-- Optimized Viewer -->
+        <model-viewer id="view" 
             src="images/Arc Knight Mk2.5.gltf" 
-            alt="Arc Knight Mk2.5 3D Aircraft Model"
             auto-rotate camera-controls
-            interpolation-decay="200"
-            field-of-view="30deg"
-            shadow-intensity="2" 
-            exposure="1.2"
-            camera-orbit="45deg 75deg 5m">
-            
-            <!-- Information Hotspots -->
-            <button class="hotspot" slot="hotspot-nose" data-position="0m 0m 1.2m" data-normal="0 0 1">
-                <div class="annotation"><b>Nose Section</b><br>Houses the brushless motor and aerodynamic fairing.</div>
-            </button>
-            <button class="hotspot" slot="hotspot-wing" data-position="1.5m 0.1m 0m" data-normal="0 1 0">
-                <div class="annotation"><b>Main Wing</b><br>High-lift airfoil for low-speed handling and stability.</div>
-            </button>
+            shadow-intensity="0.5" 
+            exposure="1"
+            loading="lazy"
+            camera-orbit="45deg 75deg 5m"
+            interpolation-decay="200">
         </model-viewer>
 
-        <!-- Navigation Buttons -->
-        <div class="controls-grid">
-            <button class="part-btn" onclick="viewPart('nose')">Nose / Motor</button>
-            <button class="part-btn" onclick="viewPart('wing')">Main Wings</button>
-            <button class="part-btn" onclick="viewPart('intake')">Intake Ports</button>
-            <button class="part-btn" onclick="viewPart('tail')">Tail / Empennage</button>
-            <button class="part-btn" onclick="viewPart('full')">Full Preview (Exit)</button>
+        <!-- Expanding Side Controls -->
+        <div class="side-controls">
+            <div class="part-card" onclick="focusPart('nose', this)">
+                <h3>Nose / Motor</h3>
+                <p>Aerodynamic fairing housing the high-torque brushless power plant.</p>
+            </div>
+            <div class="part-card" onclick="focusPart('wing', this)">
+                <h3>Main Wings</h3>
+                <p>Designed with a high-lift airfoil for low-speed flight stability.</p>
+            </div>
+            <div class="part-card" onclick="focusPart('intake', this)">
+                <h3>Intake Ports</h3>
+                <p>NACA-style ducts optimized for cooling internal electronics.</p>
+            </div>
+            <div class="part-card" onclick="focusPart('tail', this)">
+                <h3>Tail Section</h3>
+                <p>T-Tail configuration providing clean airflow and pitch stability.</p>
+            </div>
+            <div class="part-card" onclick="focusPart('full', this)">
+                <h3>Full View</h3>
+                <p>Reset camera to view the complete airframe design.</p>
+            </div>
         </div>
     </section>
 
     <script>
-        const viewer = document.querySelector('#viewer');
-        const bg = document.getElementById('bgWallpaper');
+        const viewer = document.querySelector('#view');
+        const bg = document.getElementById('bg');
 
-        // 1. Wallpaper Fade Logic
+        // 1. Optimized Scroll Fade
         window.addEventListener('scroll', () => {
-            const scrollPercent = window.scrollY / window.innerHeight;
-            // Wallpaper fades out as you scroll down
-            if (scrollPercent <= 1) {
-                bg.style.opacity = 1 - (scrollPercent * 1.2);
-            } else {
-                bg.style.opacity = 0;
-            }
-        });
+            const opacity = 1 - (window.scrollY / window.innerHeight);
+            bg.style.opacity = Math.max(opacity, 0);
+        }, { passive: true });
 
-        // 2. Menu Toggle
-        function toggleMenu() {
-            document.getElementById('menu').classList.toggle('active');
-        }
+        // 2. Camera Focus & Card Expand
+        function focusPart(part, element) {
+            // Remove active class from all cards
+            document.querySelectorAll('.part-card').forEach(c => c.classList.remove('active'));
+            // Add to clicked card
+            element.classList.add('active');
 
-        // 3. Scroll to 3D Section
-        function scrollToAircraft() {
-            document.getElementById('aircraft').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // 4. 3D Camera Focus Logic
-        function viewPart(part) {
-            // These coordinates are optimized for a standard aircraft gltf export.
-            // You can tweak the 'm' (meters) values if needed.
-            
             if (part === 'nose') {
-                viewer.cameraOrbit = "0deg 75deg 1.8m"; 
+                viewer.cameraOrbit = "0deg 75deg 1.5m"; 
                 viewer.cameraTarget = "0m 0m 0.8m"; 
-            } 
-            else if (part === 'wing') {
-                viewer.cameraOrbit = "90deg 80deg 3m";
+            } else if (part === 'wing') {
+                viewer.cameraOrbit = "90deg 80deg 2.8m";
                 viewer.cameraTarget = "1.2m 0m 0m"; 
-            } 
-            else if (part === 'intake') {
-                viewer.cameraOrbit = "45deg 80deg 1.5m";
+            } else if (part === 'intake') {
+                viewer.cameraOrbit = "45deg 80deg 1.4m";
                 viewer.cameraTarget = "0.3m 0m 0.4m";
-            } 
-            else if (part === 'tail') {
+            } else if (part === 'tail') {
                 viewer.cameraOrbit = "180deg 75deg 2.5m";
                 viewer.cameraTarget = "0m 0.2m -1.2m";
-            } 
-            else {
-                // Reset to Full View
+            } else {
                 viewer.cameraOrbit = "45deg 75deg 5m";
                 viewer.cameraTarget = "0m 0m 0m";
             }
+        }
+
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('active');
         }
     </script>
 </body>
