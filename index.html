@@ -252,17 +252,17 @@ model-viewer {
             element.classList.add('active');
 
             if (part === 'nose') {
-                viewer.cameraOrbit = "0deg 75deg 1.5m"; 
-                viewer.cameraTarget = "0m 0m 0.8m"; 
+                viewer.cameraOrbit = "0deg 75deg 0.5m"; 
+                viewer.cameraTarget = "-0.2m 0m 0m"; 
             } else if (part === 'wing') {
-                viewer.cameraOrbit = "90deg 80deg 2.8m";
-                viewer.cameraTarget = "1.2m 0m 0m"; 
+                viewer.cameraOrbit = "0deg 80deg 0.2m";
+                viewer.cameraTarget = "0m 0m 0.7m"; 
             } else if (part === 'intake') {
-                viewer.cameraOrbit = "45deg 80deg 1.4m";
-                viewer.cameraTarget = "0.3m 0m 0.4m";
+                viewer.cameraOrbit = "10deg 60deg 0.2m";
+                viewer.cameraTarget = "0.35m 0.1m 0m";
             } else if (part === 'tail') {
-                viewer.cameraOrbit = "180deg 75deg 2.5m";
-                viewer.cameraTarget = "0m 0.2m -1.2m";
+                viewer.cameraOrbit = "20deg 75deg 0.2m";
+                viewer.cameraTarget = "0.6m 0.15m 0m";
             } else {
                 viewer.cameraOrbit = "45deg 75deg 5m";
                 viewer.cameraTarget = "0m 0m 0m";
