@@ -4,160 +4,76 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rajan Jain Portfolio</title>
-
-<!-- IMPORTING FONTS & ICONS -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<!-- Updated Font Awesome CDN (This makes icons appear) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+*{ margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body{ min-height:100vh; overflow-x:hidden; background: #000; }
 
-body{
-min-height:100vh;
-overflow-x:hidden;
-background: #000;
-}
-
-/* MAIN CONTAINER */
 .container{
-min-height:100vh;
-display:grid;
-grid-template-columns:40% 60%;
-background:url("images/bg.jpg") center/cover no-repeat;
-background-attachment: fixed;
+    min-height:100vh;
+    display:grid;
+    grid-template-columns:40% 60%;
+    background:url("images/bg.jpg") center/cover no-repeat;
+    background-attachment: fixed; /* Keep for Desktop */
 }
 
-/* LEFT PANEL (GLASS PANEL) */
 .left{
-padding:60px;
-display:flex;
-flex-direction:column;
-justify-content:center;
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(15px);
--webkit-backdrop-filter:blur(15px);
-border-right:1px solid rgba(255,255,255,0.2);
-box-shadow:0 0 40px rgba(0,0,0,0.35);
-color:white;
-border-radius:0 25px 25px 0;
+    padding:60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    border-right:1px solid rgba(255,255,255,0.2);
+    box-shadow:0 0 40px rgba(0,0,0,0.35);
+    color:white;
+    border-radius:0 25px 25px 0;
 }
 
-.logo{
-font-weight:700;
-letter-spacing:2px;
-margin-bottom:40px;
-}
+.logo{ font-weight:700; letter-spacing:2px; margin-bottom:40px; }
+.left h1{ font-size:64px; line-height:64px; margin-bottom:20px; }
+.left p{ opacity:0.9; margin-bottom:30px; max-width:400px; }
 
-.left h1{
-font-size:64px;
-line-height:64px;
-margin-bottom:20px;
-}
-
-.left p{
-opacity:0.9;
-margin-bottom:30px;
-max-width:400px;
-}
-
-/* SOCIAL ICONS SECTION */
-.social-icons {
-    display: flex;
-    gap: 25px;
-    margin-bottom: 35px;
-}
-
-.social-icons a {
-    color: white;
-    font-size: 28px; /* Bigger icons */
-    transition: 0.3s;
-    text-decoration: none;
-    opacity: 0.8;
-}
-
-.social-icons a:hover {
-    opacity: 1;
-    transform: translateY(-5px); /* Moves up slightly on hover */
-    color: #7fb3b3; /* Changes color on hover */
-}
+.social-icons { display: flex; gap: 25px; margin-bottom: 35px; }
+.social-icons a { color: white; font-size: 28px; transition: 0.3s; text-decoration: none; opacity: 0.8; }
+.social-icons a:hover { opacity: 1; transform: translateY(-5px); color: #7fb3b3; }
 
 .btn{
-background:transparent;
-border:1px solid white;
-color:white;
-padding:12px 25px;
-width:200px;
-cursor:pointer;
-transition:0.3s;
-text-decoration: none;
-display: inline-block;
-text-align: center;
+    background:transparent; border:1px solid white; color:white; padding:12px 25px;
+    width:200px; cursor:pointer; transition:0.3s; text-decoration: none;
+    display: inline-block; text-align: center;
 }
+.btn:hover{ background:white; color:black; }
 
-.btn:hover{
-background:white;
-color:black;
-}
+.right{ position:relative; }
+.menu{ position:absolute; top:30px; right:30px; font-size:28px; color:white; cursor:pointer; }
+.scroll{ position:absolute; bottom:25px; left:50%; transform:translateX(-50%); font-size:28px; color:white; animation:float 2s infinite; }
 
-/* RIGHT SIDE */
-.right{
-position:relative;
-}
-
-.menu{
-position:absolute;
-top:30px;
-right:30px;
-font-size:28px;
-color:white;
-cursor:pointer;
-}
-
-.scroll{
-position:absolute;
-bottom:25px;
-left:50%;
-transform:translateX(-50%);
-font-size:28px;
-color:white;
-animation:float 2s infinite;
-}
-
-@keyframes float{
-0%{transform:translate(-50%,0)}
-50%{transform:translate(-50%,12px)}
-100%{transform:translate(-50%,0)}
-}
+@keyframes float{ 0%{transform:translate(-50%,0)} 50%{transform:translate(-50%,12px)} 100%{transform:translate(-50%,0)} }
 
 /* TABLET & MOBILE RESPONSIVENESS */
 @media(max-width:900px){
-.container{ grid-template-columns:1fr; }
-.left{
-    border-radius:0;
-    text-align:center;
-    align-items:center;
-    padding:40px 25px;
-    height: 100vh;
-    background: rgba(0,0,0,0.6); /* Darker for mobile */
-}
-.left h1{ font-size:48px; line-height:48px; }
-.social-icons { justify-content: center; }
+    .container{ 
+        grid-template-columns:1fr; 
+        background-attachment: scroll; /* FIX: Prevents blur on Android/Mobile */
+    }
+    .left{
+        border-radius:0; text-align:center; align-items:center;
+        padding:40px 25px; height: 100vh; background: rgba(0,0,0,0.6);
+    }
+    .left h1{ font-size:48px; line-height:48px; }
+    .social-icons { justify-content: center; }
 }
 
 @media(max-width:500px){
-.left h1{ font-size:36px; line-height:38px; }
-.left p{ font-size:14px; }
-.btn{ width:160px; padding:10px 18px; }
+    .left h1{ font-size:36px; line-height:38px; }
+    .left p{ font-size:14px; }
 }
 </style>
 </head>
-
 <body>
 <div class="container">
     <div class="left">
@@ -165,29 +81,14 @@ animation:float 2s infinite;
         <h1>FLIGHT<br>DESIGN</h1>
         <p>Aerospace Engineering student specializing in UAV design, pulsejet engines, structural analysis, and flight experimentation.</p>
         
-        <!-- SOCIAL LINKS WITH YOUR REAL URLS -->
         <div class="social-icons">
-            <!-- LinkedIn -->
-            <a href="https://www.linkedin.com/in/rajan-jain-b55457289/" target="_blank" title="LinkedIn">
-                <i class="fa-brands fa-linkedin"></i>
-            </a>
-            <!-- YouTube -->
-            <a href="https://www.youtube.com/@rajan-jain-001" target="_blank" title="YouTube">
-                <i class="fa-brands fa-youtube"></i>
-            </a>
-            <!-- Email -->
-            <a href="mailto:rajanjain073@gmail.com" title="Email">
-                <i class="fa-solid fa-envelope"></i>
-            </a>
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/rajanjain_073?igsh=bDFjZGwxZXM0dDh4" target="_blank" title="Instagram">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
+            <a href="https://www.linkedin.com/in/rajan-jain-b55457289/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.youtube.com/@rajan-jain-001" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            <a href="mailto:rajanjain073@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://www.instagram.com/rajanjain_073?igsh=bDFjZGwxZXM0dDh4" target="_blank"><i class="fa-brands fa-instagram"></i></a>
         </div>
-
         <a href="projects.html" class="btn">Explore Projects →</a>
     </div>
-    
     <div class="right">
         <div class="menu">☰</div>
         <div class="scroll">⌄</div>
