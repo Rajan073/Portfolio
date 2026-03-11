@@ -219,7 +219,7 @@ model-viewer {
         <div class="left-panel">
             <div class="logo">RAJAN JAIN</div>
             <h1>FLIGHT<br>DESIGN</h1>
-            <p>Aerospace Engineering student focused on UAV systems and propulsion optimization.</p>
+            <p>Aerospace Engineering student focused on UAV systems, UAV design and Aerospace structures.</p>
             
             <div class="social-icons">
                 <a href="https://linkedin.com/in/rajan-jain-b55457289/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
@@ -242,11 +242,11 @@ model-viewer {
         <model-viewer id="view" 
             src="images/Arc Knight Mk2.5.gltf" 
             auto-rotate 
-            shadow-intensity="0.5" 
-            exposure="1"
+            shadow-intensity="0.7" 
+            exposure="0.5"
             loading="lazy"
-            camera-orbit="45deg 75deg 5m"
-            interpolation-decay="200">
+            camera-orbit="45deg 75deg 3m"
+            interpolation-decay="150">
         </model-viewer>
 
         <div class="side-controls">
@@ -327,7 +327,7 @@ model-viewer {
                 viewer.cameraTarget = "0.6m 0.15m 0m";
             } else if (part === 'full') {
                 // Keep interactive but zoom out
-                viewer.cameraOrbit = "45deg 75deg 5m";
+                viewer.cameraOrbit = "45deg 75deg 3m";
                 viewer.cameraTarget = "0m 0m 0m";
             }
         }
@@ -341,7 +341,7 @@ model-viewer {
             viewer.autoRotate = true;
             
             // Reset Camera
-            viewer.cameraOrbit = "45deg 75deg 5m";
+            viewer.cameraOrbit = "45deg 75deg 3m";
             viewer.cameraTarget = "0m 0m 0m";
         }
 
