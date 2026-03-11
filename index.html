@@ -14,8 +14,8 @@
 <style>
 :root {
     --accent: #7fb3b3;
-    --glass: rgba(255, 255, 255, 0.05);
-    --blur: blur(12px);
+    --glass: rgba(255, 255, 255, 0.03); 
+    --blur: blur(10px);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
@@ -56,7 +56,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
 
 .social-icons { display: flex; gap: 20px; margin-bottom: 30px; }
 .social-icons a { color: white; font-size: 24px; opacity: 0.6; transition: 0.3s; }
-.social-icons a:hover { opacity: 1; color: var(--accent); }
+.social-icons a:hover { opacity: 1; color: var(--accent); transform: translateY(-3px); }
 
 .btn {
     border: 1px solid white; color: white; padding: 12px 25px;
@@ -74,13 +74,12 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
     overflow: hidden;
 }
 
-/* Translucent Top Header */
 .showcase-header {
     position: absolute;
     top: 0; left: 0; width: 100%;
     padding: 30px;
     text-align: center;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.15);
     backdrop-filter: var(--blur);
     z-index: 10;
     border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -91,9 +90,10 @@ model-viewer {
     width: 100%;
     height: 100%;
     z-index: 1;
+    /* By default, user interaction is disabled so scrolling works easily */
+    outline: none;
 }
 
-/* Expanding Sidebar Controls */
 .side-controls {
     position: absolute;
     right: 30px;
@@ -108,28 +108,26 @@ model-viewer {
 .part-card {
     background: var(--glass);
     backdrop-filter: var(--blur);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.08);
     padding: 15px 20px;
     border-radius: 8px;
     width: 220px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     overflow: hidden;
-    max-height: 55px; /* Collapsed */
+    max-height: 55px;
 }
 
 .part-card h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
-.part-card p { font-size: 12px; margin-top: 10px; opacity: 0; transition: 0.3s; }
+.part-card p { font-size: 12px; margin-top: 10px; opacity: 0; transition: 0.3s; line-height: 1.4; }
 
-/* Expanded State */
 .part-card.active {
     max-height: 200px;
-    background: rgba(127, 179, 179, 0.2);
+    background: rgba(127, 179, 179, 0.15);
     border-color: var(--accent);
 }
 .part-card.active p { opacity: 1; }
 
-/* Floating UI Elements */
 .menu-btn { position: fixed; top: 30px; right: 30px; font-size: 28px; cursor: pointer; z-index: 100; opacity: 0.8; }
 .scroll-hint { 
     position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
@@ -138,7 +136,6 @@ model-viewer {
 
 @keyframes bounce { 0%, 100% {transform:translate(-50%, 0)} 50% {transform:translate(-50%, 10px)} }
 
-/* 4. OVERLAY MENU */
 .nav-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -150,7 +147,6 @@ model-viewer {
 .nav-overlay.active { visibility: visible; opacity: 1; }
 .nav-overlay a { color: white; font-size: 30px; text-decoration: none; margin: 15px; font-weight: 600; }
 
-/* MOBILE RESPONSIVENESS */
 @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
     .left-panel { width: 100%; height: 100vh; text-align: center; align-items: center; border: none; }
@@ -166,7 +162,6 @@ model-viewer {
     <div class="wallpaper-layer" id="bg"></div>
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-    <!-- Navigation Menu -->
     <div class="nav-overlay" id="menu">
         <span style="position:absolute; top:30px; right:30px; font-size:40px; cursor:pointer;" onclick="toggleMenu()">×</span>
         <a href="#home" onclick="toggleMenu()">HOME</a>
@@ -174,7 +169,6 @@ model-viewer {
         <a href="projects.html">ENGINEERING</a>
     </div>
 
-    <!-- Section 1: Hero -->
     <section class="hero" id="home">
         <div class="left-panel">
             <div class="logo">RAJAN JAIN</div>
@@ -193,16 +187,15 @@ model-viewer {
         <div class="scroll-hint" onclick="document.getElementById('aircraft').scrollIntoView()">⌄</div>
     </section>
 
-    <!-- Section 2: 3D Showcase -->
     <section class="showcase" id="aircraft">
         <div class="showcase-header">
             <h2>Arc Knight Mk2.5</h2>
         </div>
 
-        <!-- Optimized Viewer -->
+        <!-- Initial State: auto-rotate ON, camera-controls OFF -->
         <model-viewer id="view" 
             src="images/Arc Knight Mk2.5.gltf" 
-            auto-rotate camera-controls
+            auto-rotate 
             shadow-intensity="0.5" 
             exposure="1"
             loading="lazy"
@@ -210,27 +203,26 @@ model-viewer {
             interpolation-decay="200">
         </model-viewer>
 
-        <!-- Expanding Side Controls -->
         <div class="side-controls">
-            <div class="part-card" onclick="focusPart('nose', this)">
+            <div class="part-card" id="btn-nose" onclick="focusPart('nose', this)">
                 <h3>Nose</h3>
-                <p>Aerodynamic fairing better to reduce the drag frontal area.</p>
+                <p>Aerodynamic fairing designed to minimize frontal drag area and improve laminar flow.</p>
             </div>
-            <div class="part-card" onclick="focusPart('wing', this)">
+            <div class="part-card" id="btn-wing" onclick="focusPart('wing', this)">
                 <h3>Main Wings</h3>
-                <p>Designed with a high-lift airfoil (NACA 2412) with 1.5 degree of dihedral for stability.</p>
+                <p>Designed with a high-lift airfoil (NACA 2412) featuring 1.5° dihedral for enhanced lateral stability.</p>
             </div>
-            <div class="part-card" onclick="focusPart('intake', this)">
+            <div class="part-card" id="btn-intake" onclick="focusPart('intake', this)">
                 <h3>Intake Ports</h3>
-                <p>Intake ducts optimized for the 60mm EDF that will provide thrust to this aircraft.</p>
+                <p>NACA-style intake ducts optimized for the internal 60mm EDF propulsion unit.</p>
             </div>
-            <div class="part-card" onclick="focusPart('tail', this)">
+            <div class="part-card" id="btn-tail" onclick="focusPart('tail', this)">
                 <h3>Tail Section</h3>
-                <p>T-Tail configuration providing clean airflow and pitch stability.</p>
+                <p>T-Tail configuration providing clean airflow to the elevator and pitch authority.</p>
             </div>
-            <div class="part-card" onclick="focusPart('full', this)">
+            <div class="part-card" id="btn-full" onclick="focusPart('full', this)">
                 <h3>Full View</h3>
-                <p>Reset camera to view the complete airframe design.</p>
+                <p>Reset camera and resume auto-rotation for the complete engineering design.</p>
             </div>
         </div>
     </section>
@@ -238,19 +230,33 @@ model-viewer {
     <script>
         const viewer = document.querySelector('#view');
         const bg = document.getElementById('bg');
+        let currentActivePart = null;
 
-        // 1. Optimized Scroll Fade
+        // 1. Scroll Fade
         window.addEventListener('scroll', () => {
             const opacity = 1 - (window.scrollY / window.innerHeight);
             bg.style.opacity = Math.max(opacity, 0);
         }, { passive: true });
 
-        // 2. Camera Focus & Card Expand
+        // 2. Camera Focus & Toggle Interaction Logic
         function focusPart(part, element) {
-            // Remove active class from all cards
+            
+            // IF THE USER CLICKS THE SAME BUTTON AGAIN: EXIT/RESET
+            if (currentActivePart === part) {
+                resetToDefault();
+                return;
+            }
+
+            // Otherwise, activate the clicked part
+            currentActivePart = part;
+
+            // Update UI classes
             document.querySelectorAll('.part-card').forEach(c => c.classList.remove('active'));
-            // Add to clicked card
             element.classList.add('active');
+
+            // ENABLE USER INTERACTION & STOP AUTO-ROTATE
+            viewer.setAttribute('camera-controls', '');
+            viewer.autoRotate = false;
 
             if (part === 'nose') {
                 viewer.cameraOrbit = "0deg 75deg 0.5m"; 
@@ -265,9 +271,24 @@ model-viewer {
                 viewer.cameraOrbit = "20deg 75deg 0.2m";
                 viewer.cameraTarget = "0.6m 0.15m 0m";
             } else {
-                viewer.cameraOrbit = "45deg 75deg 5m";
-                viewer.cameraTarget = "0m 0m 0m";
+                // Clicking 'Full View' essentially resets the experience
+                resetToDefault();
             }
+        }
+
+        function resetToDefault() {
+            currentActivePart = null;
+
+            // UI Reset
+            document.querySelectorAll('.part-card').forEach(c => c.classList.remove('active'));
+            
+            // DISABLE USER INTERACTION & RESUME AUTO-ROTATE
+            viewer.removeAttribute('camera-controls');
+            viewer.autoRotate = true;
+
+            // Reset Camera
+            viewer.cameraOrbit = "45deg 75deg 5m";
+            viewer.cameraTarget = "0m 0m 0m";
         }
 
         function toggleMenu() {
