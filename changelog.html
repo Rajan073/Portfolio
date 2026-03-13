@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog | Rajan Jain Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --accent: #7fb3b3;
+        --tint: rgba(0, 0, 0, 0.7); 
+        --blur: blur(15px);
+    }
 
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+    body { 
+        background: #000 url("images/bg.png") center/cover no-repeat fixed; 
+        color: white; 
+        min-height: 100vh;
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.6);
+        min-height: 100vh;
+        width: 100%;
+        padding: 60px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container { max-width: 800px; width: 100%; }
+
+    .back-btn { 
+        display: inline-block; color: #fff; text-decoration: none; 
+        margin-bottom: 40px; opacity: 0.7; transition: 0.3s; font-weight: 600;
+    }
+    .back-btn:hover { opacity: 1; transform: translateX(-5px); }
+
+    h1 { font-size: 40px; margin-bottom: 10px; letter-spacing: 2px; text-transform: uppercase; }
+    .status { color: var(--accent); margin-bottom: 50px; font-weight: 600; letter-spacing: 1px; }
+
+    .log-entry {
+        background: var(--tint);
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .version { 
+        font-weight: 700; color: var(--accent); font-size: 20px; margin-bottom: 10px; display: block;
+    }
+
+    .date { opacity: 0.5; font-size: 13px; position: absolute; top: 30px; right: 30px; }
+
+    ul { list-style: none; margin-top: 15px; }
+    ul li { margin-bottom: 10px; font-size: 14px; opacity: 0.8; padding-left: 20px; position: relative; }
+    ul li::before { content: "•"; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
+
+    @media (max-width: 600px) {
+        h1 { font-size: 28px; }
+        .date { position: static; margin-bottom: 10px; display: block; }
+    }
+</style>
+</head>
+<body>
+
+<div class="overlay">
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Portfolio</a>
+        <h1>System Changelog</h1>
+        <div class="status">CURRENT BUILD: ALPHA 1</div>
+
+        <!-- ALPHA 1 -->
+        <div class="log-entry">
+            <span class="version">Version Alpha 1.0</span>
+            <span class="date">Current</span>
+            <ul>
+                <li>Implemented dedicated "About Me" section with tinted window glassmorphism.</li>
+                <li>Added global Changelog system to track development milestones.</li>
+                <li>Integrated bouncing scroll-indicator chevrons for better navigation flow.</li>
+                <li>Optimized 3D Model Materials (Plastic off-white body / Matte grey intakes).</li>
+                <li>Fixed Background Scroll Bleed: Scrolling now freezes when side-menu is active.</li>
+                <li>Added circular floating "Up" button in bottom-left for quick home navigation.</li>
+            </ul>
+        </div>
+
+        <!-- v0.8 -->
+        <div class="log-entry">
+            <span class="version">Version 0.8</span>
+            <ul>
+                <li>Integrated <code>model-viewer</code> API for Arcknight Mk2.5 interactive showcase.</li>
+                <li>Developed cinematic camera zoom logic for specific aircraft part inspection.</li>
+                <li>Added dynamic Background Fade Engine linked to page scroll position.</li>
+                <li>Implemented Sticky Project Button logic in the top-right header.</li>
+            </ul>
+        </div>
+
+        <!-- v0.5 -->
+        <div class="log-entry">
+            <span class="version">Version 0.5</span>
+            <ul>
+                <li>Established global Aerospace branding (Logo, Poppins Typography).</li>
+                <li>Added social icon array (LinkedIn, YouTube, Instagram, Email).</li>
+                <li>Designed secondary Engineering Projects subpage with grid layout.</li>
+                <li>Created mobile-responsive media queries for tablet and Android support.</li>
+            </ul>
+        </div>
+
+        <!-- v0.0 -->
+        <div class="log-entry" style="opacity: 0.6;">
+            <span class="version">Version 0.0</span>
+            <ul>
+                <li>Project Initialization.</li>
+                <li>Base 40/60 Split-screen landing page concept developed.</li>
+                <li>Initial CSS glass-morphism logic tests.</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
