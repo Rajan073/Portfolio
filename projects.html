@@ -9,7 +9,7 @@
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
     
     body { 
-        background: #0f172a url("images/bg.jpg") center/cover no-repeat fixed; 
+        background: #0f172a url("images/bg.png") center/cover no-repeat fixed; 
         color: white; 
         min-height: 100vh;
     }
@@ -22,25 +22,17 @@
         width: 100%;
     }
     
-    .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
     
     .back-btn { 
-        display: inline-block; 
-        color: #fff; 
-        text-decoration: none; 
-        margin-bottom: 40px; 
-        opacity: 0.7; 
-        transition: 0.3s;
-        font-weight: 600;
+        display: inline-block; color: #fff; text-decoration: none; 
+        margin-bottom: 40px; opacity: 0.7; transition: 0.3s; font-weight: 600;
     }
     .back-btn:hover { opacity: 1; transform: translateX(-5px); }
 
     header h1 { 
-        font-size: 45px; 
-        margin-bottom: 40px; 
-        border-bottom: 2px solid rgba(255,255,255,0.1); 
-        padding-bottom: 10px; 
-        letter-spacing: 2px;
+        font-size: 45px; margin-bottom: 40px; border-bottom: 2px solid rgba(255,255,255,0.1); 
+        padding-bottom: 10px; letter-spacing: 2px;
     }
 
     section { margin-bottom: 60px; }
@@ -49,10 +41,12 @@
     /* GRID SYSTEM */
     .grid { 
         display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
         gap: 25px; 
     }
     
+    .project-link { text-decoration: none; color: inherit; display: block; }
+
     .card { 
         background: rgba(255,255,255,0.05); 
         padding: 30px; 
@@ -62,63 +56,28 @@
         transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
         display: flex;
         flex-direction: column;
+        height: 100%;
     }
-    .card:hover { 
+    .project-link:hover .card { 
         background: rgba(255,255,255,0.08); 
         transform: translateY(-8px); 
         border-color: #7fb3b3;
     }
-    .card h3 { margin-bottom: 12px; color: #fff; font-size: 20px; font-weight: 600; }
+
+    .card h3 { margin-bottom: 12px; color: #fff; font-size: 19px; font-weight: 600; }
     .card p { font-size: 14px; opacity: 0.8; line-height: 1.6; margin-bottom: 15px; }
-    .card .tag { font-size: 11px; text-transform: uppercase; color: #7fb3b3; font-weight: bold; margin-bottom: 8px; }
+    .card .tag { font-size: 10px; text-transform: uppercase; color: #7fb3b3; font-weight: bold; margin-bottom: 8px; }
 
     /* SHOW MORE LOGIC */
-    #extra-projects {
-        display: none;
-        margin-top: 25px;
-    }
-    
-    .btn-container {
-        text-align: center;
-        margin-top: 40px;
-    }
-
+    #extra-projects { display: none; margin-top: 25px; }
+    .btn-container { text-align: center; margin-top: 40px; }
     .show-more-btn {
-        background: transparent;
-        border: 1px solid #7fb3b3;
-        color: #7fb3b3;
-        padding: 12px 30px;
-        border-radius: 30px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: 0.3s;
+        background: transparent; border: 1px solid #7fb3b3; color: #7fb3b3;
+        padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: 0.3s;
     }
-    .show-more-btn:hover {
-        background: #7fb3b3;
-        color: #0f172a;
-    }
+    .show-more-btn:hover { background: #7fb3b3; color: #0f172a; }
 
-    /* SKILLS & TAGS */
-    .skills-flex { display: flex; flex-wrap: wrap; gap: 10px; }
-    .skill-tag { 
-        background: rgba(127, 179, 179, 0.1); 
-        padding: 6px 15px; 
-        border-radius: 20px; 
-        font-size: 13px; 
-        border: 1px solid rgba(127, 179, 179, 0.3);
-    }
-
-    /* LISTS */
-    ul { list-style: none; }
-    ul li { margin-bottom: 12px; padding-left: 25px; position: relative; font-size: 15px; }
-    ul li::before { content: "✈"; position: absolute; left: 0; color: #7fb3b3; }
-
-    .edu-meta { opacity: 0.6; font-size: 13px; margin-top: 4px; }
-
-    @media(max-width: 768px) { 
-        header h1 { font-size: 32px; }
-        .grid { grid-template-columns: 1fr; }
-    }
+    @media(max-width: 768px) { header h1 { font-size: 32px; } }
 </style>
 </head>
 <body>
@@ -131,124 +90,123 @@
             <h1>Engineering Portfolio</h1>
         </header>
 
-        <!-- TOP 3 PROJECTS -->
+        <!-- FEATURED PROJECTS -->
         <section>
-            <h2>Featured Projects</h2>
+            <h2>Featured Work</h2>
             <div class="grid">
-                <!-- Project 1 -->
-                <div class="card">
-                    <span class="tag">UAV & Systems</span>
-                    <h3>Arcknight (Fixed-Wing UAV & Drone Design)</h3>
-                    <p>Designed landing gear, electronics integration, and gripper mechanisms for Aerothon. Performed wing loading and CFD-based aerodynamic analysis for performance estimation.</p>
-                </div>
-                <!-- Project 2 -->
-                <div class="card">
-                    <span class="tag">Propulsion</span>
-                    <h3>Lockwood–Hiller Pulsejet Engine</h3>
-                    <p>Developed a valveless pulsejet engine in SolidWorks. Conducted internal flow analyses using SolidWorks Flow Simulation to verify combustion cycle accuracy.</p>
-                </div>
-                <!-- Project 3 -->
-                <div class="card">
-                    <span class="tag">Marine / CFD</span>
-                    <h3>Advanced Submarine Propulsion</h3>
-                    <p>Ongoing research into counter-rotating propeller configurations for wake reduction. Performing CFD simulations for hydrodynamic performance up to 1000m depth.</p>
-                </div>
+                
+                <!-- FIX: Pointing back to root index.html aircraft section -->
+                <a href="index.html#aircraft" class="project-link">
+                    <div class="card">
+                        <span class="tag">UAV & 3D Interactive</span>
+                        <h3>Arcknight (Fixed-Wing UAV Design)</h3>
+                        <p>Conceptual design including wing loading and CFD-based aerodynamic and structural analysis. View the interactive model on the home page.</p>
+                    </div>
+                </a>
+
+                <!-- Project 2: Submarine -->
+                <a href="redirect/submarine.html" class="project-link">
+                    <div class="card">
+                        <span class="tag">Marine Hydrodynamics</span>
+                        <h3>Advanced Submarine Propulsion</h3>
+                        <p>Ongoing research into counter-rotating propeller configurations for wake reduction. Performing CFD simulations for hydrodynamic performance up to 1000m depth.</p>
+                    </div>
+                </a>
+
+                <!-- Project 3: Pulsejet -->
+                <a href="redirect/pulsejet.html" class="project-link">
+                    <div class="card">
+                        <span class="tag">Propulsion</span>
+                        <h3>Lockwood–Hiller Pulsejet Engine</h3>
+                        <p>Designed a valveless pulsejet engine based on classical geometry. Performed internal flow analyses using SolidWorks Flow Simulation.</p>
+                    </div>
+                </a>
+
             </div>
 
             <!-- HIDDEN PROJECTS REVEALED ON CLICK -->
             <div id="extra-projects" class="grid">
-                <div class="card">
-                    <span class="tag">Avionics</span>
-                    <h3>Rocket Avionics & Static Test Stand</h3>
-                    <p>Head of Avionics for Team Agnipaksha. Designed electronics architecture for flight computers and instrumentation for static test stands.</p>
-                </div>
-                <div class="card">
-                    <span class="tag">High Speed Aero</span>
-                    <h3>Ramjet-Augmented TBCC Inlet</h3>
-                    <p>Conceptual study of supersonic inlet flow physics, shock control, and pressure recovery for Turbine-Based Combined Cycle propulsion.</p>
-                </div>
-                <div class="card">
-                    <span class="tag">Stealth</span>
-                    <h3>Supersonic Stealth Bomber Concept</h3>
-                    <p>Configuration inspired by the "Hopeless Diamond" concept. Focused on geometric shaping to minimize Radar Cross Section (RCS).</p>
-                </div>
-                <div class="card">
-                    <span class="tag">Programming</span>
-                    <h3>Custom Lift-to-Drag Calculator</h3>
-                    <p>Developing a Python tool using AI/Aerodynamic frameworks to estimate aircraft L/D ratios directly from 3D geometry models.</p>
-                </div>
-                <div class="card">
-                    <span class="tag">Structures</span>
-                    <h3>Heavy Bomber Landing Gear Design</h3>
-                    <p>Created assembly inspired by heavy cargo aircraft architectures, focusing on load distribution and ground handling stability.</p>
-                </div>
-                <div class="card">
-                    <span class="tag">CAD / Design</span>
-                    <h3>Multi-Configuration Aircraft Design</h3>
-                    <p>Designed a range of aircraft from basic trainers to sophisticated configurations using SolidWorks, CATIA, and Onshape.</p>
-                </div>
+
+                <a href="redirect/avionics.html" class="project-link">
+                    <div class="card">
+                        <span class="tag">Electronics & Avionics</span>
+                        <h3>Rocket Avionics & Static Test Stand</h3>
+                        <p>Serving as Head of Avionics for Team Agnipaksha. Designed optimized electronics for rocket flight computers and test stand instrumentation.</p>
+                    </div>
+                </a>
+
+                <a href="redirect/ld-calculator.html" class="project-link">
+                    <div class="card">
+                        <span class="tag">Python Programming / AI</span>
+                        <h3>Custom Lift-to-Drag (L/D) Calculator</h3>
+                        <p>Developing a Python-based tool with AI to estimate aircraft L/D ratios directly from 3D geometry models.</p>
+                    </div>
+                </a>
+
+                <a href="redirect/tbcc.html" class="project-link">
+                    <div class="card">
+                        <span class="tag">Supersonic Aero</span>
+                        <h3>Ramjet-Augmented TBCC Inlet</h3>
+                        <p>Conceptual study of supersonic inlet flow physics, focusing on shock control and compression mechanisms.</p>
+                    </div>
+                </a>
+
+                <a href="redirect/stealth.html" class="project-link">
+                    <div class="card">
+                        <span class="tag">Stealth Technology</span>
+                        <h3>Supersonic Stealth Bomber Concept</h3>
+                        <p>Geometric shaping for Radar Cross Section (RCS) reduction, inspired by the Lockheed Martin Hopeless Diamond.</p>
+                    </div>
+                </a>
+
+                <a href="redirect/drone.html" class="project-link">
+                    <div class="card">
+                        <span class="tag">Robotics</span>
+                        <h3>Aerothon Drone Design</h3>
+                        <p>Designed landing gear, electronics integration, and gripper mechanisms for mission-specific drone performance.</p>
+                    </div>
+                </a>
+
+                <a href="redirect/landing-gear.html" class="project-link">
+                    <div class="card">
+                        <span class="tag">Structures</span>
+                        <h3>Heavy Bomber Landing Gear Design</h3>
+                        <p>Created landing gear assemblies inspired by heavy cargo architectures, focusing on load distribution stability.</p>
+                    </div>
+                </a>
+
+                <a href="redirect/cad-portfolio.html" class="project-link">
+                    <div class="card">
+                        <span class="tag">CAD / CAE</span>
+                        <h3>Multi-Configuration Aircraft Design</h3>
+                        <p>Created a range of designs from basic trainer aircraft to sophisticated configurations using professional CAD suites.</p>
+                    </div>
+                </a>
+
             </div>
 
             <div class="btn-container">
-                <button class="show-more-btn" id="toggleBtn" onclick="toggleProjects()">Show More</button>
-            </div>
-        </section>
-
-        <!-- SKILLS SECTION -->
-        <section>
-            <h2>Technical Expertise</h2>
-            <div class="skills-flex">
-                <div class="skill-tag">Python</div>
-                <div class="skill-tag">MATLAB</div>
-                <div class="skill-tag">SolidWorks & Flow Simulation</div>
-                <div class="skill-tag">ANSYS</div>
-                <div class="skill-tag">CATIA</div>
-                <div class="skill-tag">Onshape</div>
-                <div class="skill-tag">OpenRocket</div>
-                <div class="skill-tag">Aerodynamic Analysis</div>
-                <div class="skill-tag">FEA & Structural Analysis</div>
-                <div class="skill-tag">RC Piloting</div>
-            </div>
-        </section>
-
-        <!-- EDUCATION SECTION -->
-        <section>
-            <h2>Education</h2>
-            <div class="card">
-                <ul>
-                    <li>
-                        <strong>B.Tech – Aerospace Engineering</strong>
-                        <div class="edu-meta">VIT Bhopal University | 2023 – 2027 | CGPA: 8.97/10</div>
-                    </li>
-                    <li>
-                        <strong>Class XII (CBSE)</strong>
-                        <div class="edu-meta">Silver Bells High School | 2023 | 71.6%</div>
-                    </li>
-                    <li>
-                        <strong>Class X (CBSE)</strong>
-                        <div class="edu-meta">Metropolis International School | 2021 | 81.5%</div>
-                    </li>
-                </ul>
+                <button class="show-more-btn" id="toggleBtn" onclick="toggleProjects()">View More Projects</button>
             </div>
         </section>
 
         <!-- ACHIEVEMENTS & CERTIFICATIONS -->
         <section>
             <div class="grid">
-                <div>
+                <div class="card">
                     <h2>Achievements</h2>
-                    <ul style="opacity: 0.9;">
-                        <li>Qualified Phase 2 of Aerothon 2025</li>
+                    <ul style="list-style: '✈  '; padding-left: 20px; font-size: 14px; opacity: 0.9;">
+                        <li>Phase 2 Qualifier: Aerothon 2025</li>
                         <li>Shortlisted for NIDAR 2025</li>
-                        <li>RC Aircraft Construction & Flight Testing</li>
                         <li>Head of Avionics - Team Agnipaksha</li>
+                        <li>RC Aircraft Flight Testing & Piloting</li>
                     </ul>
                 </div>
-                <div>
+                <div class="card">
                     <h2>Certifications</h2>
-                    <ul style="opacity: 0.9;">
-                        <li>NPTEL: Aerospace Vehicle Design (2025)</li>
-                        <li>Gas Turbine Technology Workshop (2025)</li>
+                    <ul style="list-style: '✈  '; padding-left: 20px; font-size: 14px; opacity: 0.9;">
+                        <li>Aerospace Vehicle Design (NPTEL)</li>
+                        <li>Gas Turbine Technology Workshop</li>
                         <li>NIDAR & Aerothon Participation</li>
                     </ul>
                 </div>
@@ -265,11 +223,10 @@
 
         if (extraProjects.style.display === "grid") {
             extraProjects.style.display = "none";
-            btn.innerHTML = "Show More";
+            btn.innerHTML = "View More Projects";
         } else {
             extraProjects.style.display = "grid";
-            btn.innerHTML = "Show Less";
-            // Smooth scroll to the new projects
+            btn.innerHTML = "View Less";
             extraProjects.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
