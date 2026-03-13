@@ -85,7 +85,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
 }
 .btn:hover { background: white; color: black; }
 
-/* 3. ABOUT ME SECTION (Tinted Window) */
+/* 3. ABOUT ME SECTION */
 .about-section {
     min-height: 100vh;
     padding: 100px 10%;
@@ -114,7 +114,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
 .cv-data li { margin-bottom: 12px; font-size: 14px; }
 .cv-data span { color: var(--accent); font-weight: 600; }
 
-/* 4. 3D SHOWCASE SECTION (Pure Black BG) */
+/* 4. 3D SHOWCASE SECTION */
 .showcase {
     position: relative;
     height: 100vh;
@@ -136,7 +136,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
 
 model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
 
-/* RESTORED: SLEEK SIDE CARDS */
+/* RESTORED: SLEEK EXPANDING CARDS */
 .side-controls {
     position: absolute;
     right: 30px;
@@ -158,7 +158,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     overflow: hidden;
-    max-height: 55px; /* Collapsed */
+    max-height: 55px;
 }
 
 .part-card h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
@@ -171,7 +171,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
 }
 .part-card.active p { opacity: 1; }
 
-/* FLOATING NAV SYSTEM */
+/* FLOATING NAV */
 .floating-nav { position: fixed; top: 30px; right: 30px; display: flex; align-items: center; gap: 15px; z-index: 1000; }
 
 .pop-projects-btn {
@@ -236,7 +236,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
                 <a href="https://www.instagram.com/rajanjain_073?igsh=bDFjZGwxZXM0dDh4" target="_blank"><i class="fa-brands fa-instagram"></i></a>
                 <a href="mailto:rajanjain073@gmail.com"><i class="fa-solid fa-envelope"></i></a>
             </div>
-            <a href="projects.html" class="btn" id="mainProjectBtn">My Projects  →</a>
+            <a href="projects.html" class="btn" id="mainProjectBtn">My Projects →</a>
         </div>
         <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView()">
             <i class="fas fa-chevron-down"></i>
@@ -248,7 +248,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
         <div class="about-card">
             <div>
                 <h2>About Me</h2>
-                <p>I am an Aerospace Engineering Undergraduate at <span>VIT Bhopal University</span>. I am deeply passionate about aircraft construction, aircraft structures and structures in general, aeromodelling, and flight testing.</p>
+                <p>I am an Aerospace Engineering Undergraduate at <span>VIT Bhopal University</span>. I am deeply passionate about aircraft construction, aircraft structures, aeromodelling, and flight testing.</p>
                 <p>I am the Head of the Avionics Department for Team Agnipaksha, specializing in the design of electronics architecture for rocket flight computers.</p>
             </div>
             <div>
@@ -256,7 +256,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
                     <li><span>Degree:</span> B.Tech Aerospace Engineering (2023-27)</li>
                     <li><span>CGPA:</span> 8.97 / 10</li>
                     <li><span>Location:</span> Gwalior, Madhya Pradesh</li>
-                    <li><span>Key Skills:</span> Python, SolidWorks, ANSYS, Catia, Onshape, WingHelper</li>
+                    <li><span>Key Skills:</span> Python, SolidWorks, ANSYS, Catia, Onshape</li>
                     <li><span>Interests:</span> UAV Design, Aircraft Structures, CFD, RC Piloting</li>
                 </ul>
                 <br>
@@ -284,7 +284,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
             interpolation-decay="150">
         </model-viewer>
 
-        <!-- RESTORED: SLEEK EXPANDING CARDS -->
+        <!-- SIDE CONTROLS -->
         <div class="side-controls">
             <div class="part-card" onclick="focusPart('nose', this)">
                 <h3>Nose</h3>
@@ -302,9 +302,9 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
                 <h3>Tail Section</h3>
                 <p>T-Tail configuration providing clean airflow to the elevator and pitch authority.</p>
             </div>
-            <div class="part-card" onclick="focusPart('full', this)">
-                <h3>Full View</h3>
-                <p>Inspect the complete design. Click again to resume rotation.</p>
+            <div class="part-card" onclick="focusPart('free', this)">
+                <h3>Free View</h3>
+                <p>Manual control enabled. Inspect the complete design freely. <strong>Click again to resume auto-rotation.</strong></p>
             </div>
         </div>
     </section>
@@ -316,15 +316,13 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
         const stickyBtn = document.getElementById('stickyBtn');
         let currentActivePart = null;
 
+        // Scroll Logic
         window.addEventListener('scroll', () => {
             const scrollPos = window.scrollY;
             const windowHeight = window.innerHeight;
-            
-            // Background stays visible for Hero and About
             let opacity = 1 - (scrollPos / (windowHeight * 1.8));
             bg.style.opacity = Math.max(opacity, 0);
 
-            // Pop-up button logic
             const btnRect = mainBtn.getBoundingClientRect();
             if (btnRect.bottom < 0) {
                 stickyBtn.classList.add('visible');
@@ -333,14 +331,20 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
             }
         }, { passive: true });
 
+        // Camera Focus Logic
         function focusPart(part, element) {
+            
+            // TOGGLE LOGIC: Clicking the same button resets it
             if (currentActivePart === part) {
                 resetToDefault();
                 return;
             }
+
             currentActivePart = part;
             document.querySelectorAll('.part-card').forEach(c => c.classList.remove('active'));
             element.classList.add('active');
+
+            // STOP ROTATION & ENABLE DRAGGING
             viewer.autoRotate = false;
             viewer.setAttribute('camera-controls', '');
 
@@ -352,16 +356,22 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
                 viewer.cameraOrbit = "10deg 60deg 0.2m"; viewer.cameraTarget = "0.35m 0.1m 0m";
             } else if (part === 'tail') {
                 viewer.cameraOrbit = "20deg 75deg 0.2m"; viewer.cameraTarget = "0.6m 0.15m 0m";
-            } else {
-                resetToDefault();
+            } else if (part === 'free') {
+                // For Full View: Stay zoomed out but keep interaction on
+                viewer.cameraOrbit = "290deg 75deg 2.1m";
+                viewer.cameraTarget = "0.15m 0.1m 0m";
             }
         }
 
         function resetToDefault() {
             currentActivePart = null;
             document.querySelectorAll('.part-card').forEach(c => c.classList.remove('active'));
+            
+            // RE-ENABLE AUTO-ROTATE & DISABLE MANUAL DRAGGING
             viewer.removeAttribute('camera-controls');
             viewer.autoRotate = true;
+            
+            // Reset Camera position
             viewer.cameraOrbit = "290deg 75deg 2.1m";
             viewer.cameraTarget = "0.15m 0.1m 0m";
         }
