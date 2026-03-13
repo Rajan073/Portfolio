@@ -13,16 +13,16 @@
 <style>
 :root {
     --accent: #7fb3b3;
-    --arrow: #faf9f6; /* Off-white Arrow */
+    --arrow: #faf9f6; 
     --glass: rgba(255, 255, 255, 0.05); 
-    --tint: rgba(0, 0, 0, 0.65); 
+    --tint: rgba(0, 0, 0, 0.75); 
     --blur: blur(15px);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
 body { background: #000; color: white; scroll-behavior: smooth; overflow-x: hidden; }
 
-/* 1. BACKGROUND FADE SYSTEM */
+/* BACKGROUND FADE SYSTEM */
 .wallpaper-layer {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -31,7 +31,7 @@ body { background: #000; color: white; scroll-behavior: smooth; overflow-x: hidd
     transition: opacity 0.4s linear;
 }
 
-/* 2. HERO SECTION */
+/* HERO SECTION */
 .hero {
     height: 100vh;
     display: grid;
@@ -66,7 +66,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 30px;
+    font-size: 32px;
     color: var(--arrow);
     cursor: pointer;
     animation: bounceArrow 2s infinite;
@@ -85,7 +85,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
 }
 .btn:hover { background: white; color: black; }
 
-/* 3. ABOUT ME SECTION */
+/* ABOUT ME SECTION */
 .about-section {
     min-height: 100vh;
     padding: 100px 10%;
@@ -106,6 +106,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
 .about-card h2 { color: var(--accent); margin-bottom: 20px; font-size: 32px; text-transform: uppercase; letter-spacing: 2px; }
@@ -114,7 +115,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
 .cv-data li { margin-bottom: 12px; font-size: 14px; }
 .cv-data span { color: var(--accent); font-weight: 600; }
 
-/* 4. 3D SHOWCASE SECTION */
+/* 3D SHOWCASE SECTION */
 .showcase {
     position: relative;
     height: 100vh;
@@ -136,7 +137,6 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
 
 model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
 
-/* SLEEK SIDE CARDS */
 .side-controls {
     position: absolute;
     right: 30px;
@@ -171,7 +171,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
 }
 .part-card.active p { opacity: 1; }
 
-/* FLOATING NAVIGATION ELEMENTS */
+/* FLOATING NAVIGATION */
 .floating-nav { position: fixed; top: 30px; right: 30px; display: flex; align-items: center; gap: 15px; z-index: 1000; }
 
 .pop-projects-btn {
@@ -183,22 +183,22 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
 }
 .pop-projects-btn.visible { opacity: 1; transform: translateX(0); pointer-events: all; }
 
-/* UP BUTTON (Bottom Left Corner) */
+/* UP BUTTON */
 .up-btn {
     position: fixed;
     bottom: 30px;
     left: 30px;
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     background: var(--tint);
     backdrop-filter: var(--blur);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     color: var(--arrow);
-    font-size: 20px;
+    font-size: 22px;
     cursor: pointer;
     z-index: 1000;
     opacity: 0;
@@ -206,13 +206,12 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
     transform: translateY(20px);
     transition: all 0.4s ease;
 }
-
 .up-btn.visible {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
-
+/* ✅ RESTORED: Hover style for up button */
 .up-btn:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: var(--accent);
@@ -221,7 +220,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
 /* TINTED MENU OVERLAY */
 .nav-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.7); 
+    background: rgba(0, 0, 0, 0.8); 
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     z-index: 2000;
@@ -237,7 +236,8 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
     .about-card { grid-template-columns: 1fr; }
     .side-controls { right: 10px; width: 160px; }
     .part-card { width: 150px; }
-    .up-btn { left: 15px; bottom: 15px; } /* Adjust for mobile */
+    /* ✅ RESTORED: Mobile position adjustment for up button */
+    .up-btn { left: 15px; bottom: 15px; }
 }
 </style>
 </head>
@@ -246,24 +246,23 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
 
     <div class="wallpaper-layer" id="bg"></div>
 
-    <!-- Floating Nav Top Right -->
     <div class="floating-nav">
         <a href="projects.html" class="pop-projects-btn" id="stickyBtn">My Projects</a>
         <div class="menu-btn" onclick="toggleMenu()" style="font-size: 28px; cursor: pointer; color: white;">☰</div>
     </div>
 
-    <!-- Up Button Bottom Left -->
     <div class="up-btn" id="upBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
         <i class="fas fa-chevron-up"></i>
     </div>
 
-    <!-- Tinted Menu Overlay -->
+    <!-- Navigation Menu (Changelog Added) -->
     <div class="nav-overlay" id="menu">
         <span style="position:absolute; top:30px; right:30px; font-size:40px; cursor:pointer;" onclick="toggleMenu()">×</span>
         <a href="#home" onclick="toggleMenu()">HOME</a>
         <a href="#about" onclick="toggleMenu()">ABOUT ME</a>
         <a href="#aircraft" onclick="toggleMenu()">ARC KNIGHT 3D</a>
         <a href="projects.html" onclick="toggleMenu()">MY PROJECTS</a>
+        <a href="changelog.html" onclick="toggleMenu()" style="font-size: 18px; color: var(--accent); opacity: 0.8;">CHANGELOG</a>
     </div>
 
     <!-- Section 1: Hero -->
@@ -291,15 +290,15 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
             <div>
                 <h2>About Me</h2>
                 <p>I am an Aerospace Engineering Undergraduate at <span>VIT Bhopal University</span>. I am deeply passionate about aircraft construction, aircraft structures, aeromodelling, and flight testing.</p>
-                <p>I am the Head of the Avionics Department for Team Agnipaksha, specializing in the design of electronics architecture for rocket flight computers.</p>
+                <p>I thrive on the challenge of bridging the gap between a 3D simulation and a physical machine. When I'm not in the lab, you'll find me at the flight field troubleshooting telemetry lags or pushing the limits of high-speed RC flight.</p>
             </div>
             <div>
                 <ul class="cv-data">
                     <li><span>Degree:</span> B.Tech Aerospace Engineering (2023-27)</li>
                     <li><span>CGPA:</span> 8.97 / 10</li>
-                    <li><span>Location:</span> Gwalior, Madhya Pradesh</li>
-                    <li><span>Key Skills:</span> Python, SolidWorks, ANSYS, Catia, Onshape</li>
-                    <li><span>Interests:</span> UAV Design, Aircraft Structures, CFD, RC Piloting</li>
+                    <li><span>Leadership:</span> Head of Avionics, Team Agnipaksha</li>
+                    <li><span>Key Skills:</span> Python, SolidWorks, ANSYS, MATLAB</li>
+                    <li><span>Interests:</span> UAV Design, CFD, RC Piloting</li>
                 </ul>
                 <br>
                 <a href="#aircraft" class="btn" style="width:100%">Explore 3D Model →</a>
@@ -363,12 +362,9 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
         window.addEventListener('scroll', () => {
             const scrollPos = window.scrollY;
             const windowHeight = window.innerHeight;
-            
-            // Background Fade
             let opacity = 1 - (scrollPos / (windowHeight * 1.8));
             bg.style.opacity = Math.max(opacity, 0);
 
-            // Pop-up My Projects button (Top Right)
             const btnRect = mainBtn.getBoundingClientRect();
             if (btnRect.bottom < 0) {
                 stickyBtn.classList.add('visible');
@@ -376,8 +372,6 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
                 stickyBtn.classList.remove('visible');
             }
 
-            // Up Button Logic (Bottom Left)
-            // Appears when we have scrolled into the About section
             if (scrollPos >= aboutSection.offsetTop - 300) {
                 upBtn.classList.add('visible');
             } else {
