@@ -15,14 +15,14 @@
     --accent: #7fb3b3;
     --arrow: #faf9f6; 
     --glass: rgba(255, 255, 255, 0.05); 
-    --tint: rgba(0, 0, 0, 0.75); 
+    --tint: rgba(0, 0, 0, 0.65); 
     --blur: blur(15px);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
 body { background: #000; color: white; scroll-behavior: smooth; overflow-x: hidden; }
 
-/* BACKGROUND FADE SYSTEM */
+/* 1. BACKGROUND FADE SYSTEM */
 .wallpaper-layer {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -31,7 +31,7 @@ body { background: #000; color: white; scroll-behavior: smooth; overflow-x: hidd
     transition: opacity 0.4s linear;
 }
 
-/* HERO SECTION */
+/* 2. HERO SECTION */
 .hero {
     height: 100vh;
     display: grid;
@@ -66,7 +66,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 32px;
+    font-size: 30px;
     color: var(--arrow);
     cursor: pointer;
     animation: bounceArrow 2s infinite;
@@ -85,7 +85,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
 }
 .btn:hover { background: white; color: black; }
 
-/* ABOUT ME SECTION */
+/* 3. ABOUT ME SECTION */
 .about-section {
     min-height: 100vh;
     padding: 100px 10%;
@@ -115,7 +115,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
 .cv-data li { margin-bottom: 12px; font-size: 14px; }
 .cv-data span { color: var(--accent); font-weight: 600; }
 
-/* 3D SHOWCASE SECTION */
+/* 4. 3D SHOWCASE SECTION */
 .showcase {
     position: relative;
     height: 100vh;
@@ -137,6 +137,48 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
 
 model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
 
+/* ITERATION SELECTOR (Left Side) */
+.version-selector {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 20;
+}
+.ver-btn {
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 12px;
+    font-weight: 600;
+}
+.ver-btn.active { background: var(--accent); color: black; border-color: var(--accent); }
+
+/* SPECS PANEL (Bottom Left) */
+.specs-box {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    background: var(--tint);
+    backdrop-filter: var(--blur);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 12px;
+    width: 320px;
+    z-index: 20;
+    pointer-events: none;
+}
+.specs-box h4 { font-size: 14px; color: var(--accent); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+.specs-box p { font-size: 12px; opacity: 0.8; line-height: 1.5; }
+
+/* SLEEK SIDE CARDS (Right Side) */
 .side-controls {
     position: absolute;
     right: 30px;
@@ -160,10 +202,8 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
     overflow: hidden;
     max-height: 55px;
 }
-
 .part-card h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
 .part-card p { font-size: 12px; margin-top: 10px; opacity: 0; transition: 0.3s; line-height: 1.4; }
-
 .part-card.active {
     max-height: 200px;
     background: rgba(127, 179, 179, 0.15);
@@ -173,7 +213,6 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
 
 /* FLOATING NAVIGATION */
 .floating-nav { position: fixed; top: 30px; right: 30px; display: flex; align-items: center; gap: 15px; z-index: 1000; }
-
 .pop-projects-btn {
     background: var(--glass); backdrop-filter: var(--blur);
     border: 1px solid rgba(255, 255, 255, 0.1); color: white;
@@ -185,59 +224,34 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
 
 /* UP BUTTON */
 .up-btn {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    width: 55px;
-    height: 55px;
-    background: var(--tint);
-    backdrop-filter: var(--blur);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--arrow);
-    font-size: 22px;
-    cursor: pointer;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(20px);
-    transition: all 0.4s ease;
+    position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px;
+    background: var(--tint); backdrop-filter: var(--blur); border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%; display: flex; justify-content: center; align-items: center;
+    color: var(--arrow); font-size: 22px; cursor: pointer; z-index: 1000;
+    opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.4s ease;
 }
-.up-btn.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-/* ✅ RESTORED: Hover style for up button */
-.up-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--accent);
-}
+.up-btn.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.up-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); }
 
 /* TINTED MENU OVERLAY */
 .nav-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.8); 
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    z-index: 2000;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+    z-index: 2000; display: flex; flex-direction: column; justify-content: center; align-items: center;
     visibility: hidden; opacity: 0; transition: 0.4s;
 }
 .nav-overlay.active { visibility: visible; opacity: 1; }
 .nav-overlay a { color: white; font-size: 30px; text-decoration: none; margin: 15px; font-weight: 600; transition: 0.3s; }
-.nav-overlay a:hover { color: var(--accent); transform: scale(1.1); }
 
 @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
     .about-card { grid-template-columns: 1fr; }
     .side-controls { right: 10px; width: 160px; }
     .part-card { width: 150px; }
-    /* ✅ RESTORED: Mobile position adjustment for up button */
     .up-btn { left: 15px; bottom: 15px; }
+    .version-selector { left: 10px; }
+    .specs-box { width: 250px; left: 10px; }
 }
 </style>
 </head>
@@ -255,7 +269,6 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
         <i class="fas fa-chevron-up"></i>
     </div>
 
-    <!-- Navigation Menu (Changelog Added) -->
     <div class="nav-overlay" id="menu">
         <span style="position:absolute; top:30px; right:30px; font-size:40px; cursor:pointer;" onclick="toggleMenu()">×</span>
         <a href="#home" onclick="toggleMenu()">HOME</a>
@@ -265,7 +278,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
         <a href="changelog.html" onclick="toggleMenu()" style="font-size: 18px; color: var(--accent); opacity: 0.8;">CHANGELOG</a>
     </div>
 
-    <!-- Section 1: Hero -->
+    <!-- Section 1 -->
     <section class="hero" id="home">
         <div class="left-panel">
             <div class="logo">RAJAN JAIN</div>
@@ -284,7 +297,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
         </div>
     </section>
 
-    <!-- Section 2: About Me -->
+    <!-- Section 2 -->
     <section class="about-section" id="about">
         <div class="about-card">
             <div>
@@ -309,14 +322,28 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
         </div>
     </section>
 
-    <!-- Section 3: 3D Aircraft -->
+    <!-- Section 3: 3D Aircraft Iterations -->
     <section class="showcase" id="aircraft">
         <div class="showcase-header">
-            <h2>ARC KNIGHT MK2.5</h2>
+            <h2 id="ver-title">ARC KNIGHT MK3</h2>
+        </div>
+
+        <!-- Iteration Selector (Left) -->
+        <div class="version-selector">
+            <button class="ver-btn" onclick="changeVer('mk1', this)">MK1</button>
+            <button class="ver-btn" onclick="changeVer('mk2', this)">MK2</button>
+            <button class="ver-btn" onclick="changeVer('mk2.5', this)">MK2.5</button>
+            <button class="ver-btn active" onclick="changeVer('mk3', this)">MK3</button>
+        </div>
+
+        <!-- Specs Panel (Bottom Left) -->
+        <div class="specs-box">
+            <h4 id="spec-title">MK3 Design Specs</h4>
+            <p id="spec-desc">Iteration 3: Enhanced aerodynamic design with improved control surfaces and streamlined payload bay.</p>
         </div>
 
         <model-viewer id="view" 
-            src="images/Arc Knight Mk2.5.gltf" 
+            src="images/Arc Knight Mk3.gltf" 
             auto-rotate 
             shadow-intensity="0.5" 
             exposure="0.55"
@@ -325,6 +352,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
             interpolation-decay="150">
         </model-viewer>
 
+        <!-- Side Controls (Right) -->
         <div class="side-controls">
             <div class="part-card" onclick="focusPart('nose', this)">
                 <h3>Nose</h3>
@@ -356,53 +384,48 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
         const stickyBtn = document.getElementById('stickyBtn');
         const upBtn = document.getElementById('upBtn');
         const aboutSection = document.getElementById('about');
-
         let currentActivePart = null;
+
+        // Data for Iterations
+        const aircraftData = {
+            'mk1': { title: 'ARC KNIGHT MK1', src: 'images/Arc Knight Mk1.gltf', desc: 'Baseline design: Aerodynamic fundamental airframe without complex stabilizers or surfaces.' },
+            'mk2': { title: 'ARC KNIGHT MK2', src: 'images/Arc Knight Mk2.gltf', desc: 'Iteration 2: Added fixed front canards to improve pitch control and stall resistance, also increase the size of the bottom airduct for an increased airflow at high angle of attacks.' },
+            'mk2.5': { title: 'ARC KNIGHT MK2.5', src: 'images/Arc Knight Mk2.5.gltf', desc: 'Iteration 2.5: Integrated ventral fins and 1.5° dihedral wings for superior lateral stability.' },
+            'mk3': { title: 'ARC KNIGHT MK3', src: 'images/Arc Knight Mk3.gltf', desc: 'Iteration 3: Optimized high-efficiency winglets added to wingtips for induced drag reduction.' }
+        };
+
+        function changeVer(ver, btn) {
+            document.querySelectorAll('.ver-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            viewer.src = aircraftData[ver].src;
+            document.getElementById('ver-title').innerText = aircraftData[ver].title;
+            document.getElementById('spec-title').innerText = ver.toUpperCase() + ' Design Specs';
+            document.getElementById('spec-desc').innerText = aircraftData[ver].desc;
+            resetToDefault();
+        }
 
         window.addEventListener('scroll', () => {
             const scrollPos = window.scrollY;
             const windowHeight = window.innerHeight;
-            let opacity = 1 - (scrollPos / (windowHeight * 1.8));
-            bg.style.opacity = Math.max(opacity, 0);
-
-            const btnRect = mainBtn.getBoundingClientRect();
-            if (btnRect.bottom < 0) {
-                stickyBtn.classList.add('visible');
-            } else {
-                stickyBtn.classList.remove('visible');
-            }
-
-            if (scrollPos >= aboutSection.offsetTop - 300) {
-                upBtn.classList.add('visible');
-            } else {
-                upBtn.classList.remove('visible');
-            }
+            bg.style.opacity = Math.max(1 - (scrollPos / (windowHeight * 1.8)), 0);
+            if (mainBtn.getBoundingClientRect().bottom < 0) stickyBtn.classList.add('visible');
+            else stickyBtn.classList.remove('visible');
+            if (scrollPos >= aboutSection.offsetTop - 300) upBtn.classList.add('visible');
+            else upBtn.classList.remove('visible');
         }, { passive: true });
 
         function focusPart(part, element) {
-            if (currentActivePart === part) {
-                resetToDefault();
-                return;
-            }
+            if (currentActivePart === part) { resetToDefault(); return; }
             currentActivePart = part;
             document.querySelectorAll('.part-card').forEach(c => c.classList.remove('active'));
             element.classList.add('active');
-
             viewer.autoRotate = false;
             viewer.setAttribute('camera-controls', '');
-
-            if (part === 'nose') {
-                viewer.cameraOrbit = "0deg 75deg 0.5m"; viewer.cameraTarget = "-0.2m 0m 0m"; 
-            } else if (part === 'wing') {
-                viewer.cameraOrbit = "0deg 80deg 0.2m"; viewer.cameraTarget = "0.1m 0m 0.55m"; 
-            } else if (part === 'intake') {
-                viewer.cameraOrbit = "10deg 60deg 0.2m"; viewer.cameraTarget = "0.35m 0.1m 0m";
-            } else if (part === 'tail') {
-                viewer.cameraOrbit = "20deg 75deg 0.2m"; viewer.cameraTarget = "0.6m 0.15m 0m";
-            } else if (part === 'free') {
-                viewer.cameraOrbit = "290deg 75deg 2.1m";
-                viewer.cameraTarget = "0.15m 0.1m 0m";
-            }
+            if (part === 'nose') { viewer.cameraOrbit = "0deg 75deg 0.5m"; viewer.cameraTarget = "-0.2m 0m 0m"; }
+            else if (part === 'wing') { viewer.cameraOrbit = "0deg 80deg 0.2m"; viewer.cameraTarget = "0.1m 0m 0.55m"; }
+            else if (part === 'intake') { viewer.cameraOrbit = "10deg 60deg 0.2m"; viewer.cameraTarget = "0.35m 0.1m 0m"; }
+            else if (part === 'tail') { viewer.cameraOrbit = "20deg 75deg 0.2m"; viewer.cameraTarget = "0.6m 0.15m 0m"; }
+            else if (part === 'free') { viewer.cameraOrbit = "290deg 75deg 2.1m"; viewer.cameraTarget = "0.15m 0.1m 0m"; }
         }
 
         function resetToDefault() {
@@ -417,11 +440,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
         function toggleMenu() {
             const menu = document.getElementById('menu');
             menu.classList.toggle('active');
-            if (menu.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'auto';
-            }
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
         }
     </script>
 </body>
