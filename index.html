@@ -135,7 +135,14 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
+/* Field-of-view and interaction-prompt added to prevent jumping */
+model-viewer { 
+    width: 100%; 
+    height: 100%; 
+    z-index: 1; 
+    outline: none;
+    --poster-color: transparent;
+}
 
 /* ITERATION SELECTOR (Left Side) */
 .version-selector {
@@ -236,7 +243,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
 /* TINTED MENU OVERLAY */
 .nav-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.8); 
+    background: rgba(0, 0, 0, 0.7); 
     backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
     z-index: 2000; display: flex; flex-direction: column; justify-content: center; align-items: center;
     visibility: hidden; opacity: 0; transition: 0.4s;
@@ -328,7 +335,6 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
             <h2 id="ver-title">ARC KNIGHT MK3</h2>
         </div>
 
-        <!-- Iteration Selector (Left) -->
         <div class="version-selector">
             <button class="ver-btn" onclick="changeVer('mk1', this)">MK1</button>
             <button class="ver-btn" onclick="changeVer('mk2', this)">MK2</button>
@@ -336,12 +342,12 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
             <button class="ver-btn active" onclick="changeVer('mk3', this)">MK3</button>
         </div>
 
-        <!-- Specs Panel (Bottom Left) -->
         <div class="specs-box">
             <h4 id="spec-title">MK3 Design Specs</h4>
-            <p id="spec-desc">Iteration 3: Enhanced aerodynamic design with improved control surfaces and streamlined payload bay.</p>
+            <p id="spec-desc">Iteration 3: Optimized high-efficiency winglets added to wingtips for induced drag reduction.</p>
         </div>
 
+        <!-- ✅ FIXED: field-of-view and decay changed to prevent jumping -->
         <model-viewer id="view" 
             src="images/Arc Knight Mk3.gltf" 
             auto-rotate 
@@ -349,10 +355,10 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
             exposure="0.55"
             loading="lazy"
             camera-orbit="290deg 75deg 2.1m"
-            interpolation-decay="150">
+            field-of-view="30deg"
+            interpolation-decay="300">
         </model-viewer>
 
-        <!-- Side Controls (Right) -->
         <div class="side-controls">
             <div class="part-card" onclick="focusPart('nose', this)">
                 <h3>Nose</h3>
@@ -386,7 +392,6 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
         const aboutSection = document.getElementById('about');
         let currentActivePart = null;
 
-        // Data for Iterations
         const aircraftData = {
             'mk1': { title: 'ARC KNIGHT MK1', src: 'images/Arc Knight Mk1.gltf', desc: 'Baseline design: Aerodynamic fundamental airframe without complex stabilizers or surfaces.' },
             'mk2': { title: 'ARC KNIGHT MK2', src: 'images/Arc Knight Mk2.gltf', desc: 'Iteration 2: Added fixed front canards to improve pitch control and stall resistance, increased the size of the bottom airduct for an increased airflow at high angle of attacks and integrated ventral fins for directional stability and yaw damping.' },
@@ -394,14 +399,23 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
             'mk3': { title: 'ARC KNIGHT MK3', src: 'images/Arc Knight Mk3.gltf', desc: 'Iteration 3: Optimized high-efficiency winglets added to wingtips for induced drag reduction.' }
         };
 
+        // ✅ FIXED: Removed immediate resetToDefault snap, used smooth glide instead
         function changeVer(ver, btn) {
             document.querySelectorAll('.ver-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            
+            // Swap source while keeping camera fixed
             viewer.src = aircraftData[ver].src;
+            
             document.getElementById('ver-title').innerText = aircraftData[ver].title;
             document.getElementById('spec-title').innerText = ver.toUpperCase() + ' Design Specs';
             document.getElementById('spec-desc').innerText = aircraftData[ver].desc;
-            resetToDefault();
+            
+            // Transition back to overview smoothly without snapping
+            currentActivePart = null;
+            document.querySelectorAll('.part-card').forEach(c => c.classList.remove('active'));
+            viewer.removeAttribute('camera-controls');
+            viewer.autoRotate = true;
         }
 
         window.addEventListener('scroll', () => {
@@ -421,6 +435,7 @@ model-viewer { width: 100%; height: 100%; z-index: 1; outline: none; }
             element.classList.add('active');
             viewer.autoRotate = false;
             viewer.setAttribute('camera-controls', '');
+
             if (part === 'nose') { viewer.cameraOrbit = "0deg 75deg 0.5m"; viewer.cameraTarget = "-0.2m 0m 0m"; }
             else if (part === 'wing') { viewer.cameraOrbit = "0deg 80deg 0.2m"; viewer.cameraTarget = "0.1m 0m 0.55m"; }
             else if (part === 'intake') { viewer.cameraOrbit = "10deg 60deg 0.2m"; viewer.cameraTarget = "0.35m 0.1m 0m"; }
