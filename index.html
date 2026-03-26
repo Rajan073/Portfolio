@@ -21,6 +21,7 @@
 
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
 
+/* Prevent layout shift and horizontal scroll */
 html { overflow-x: hidden; width: 100%; }
 body { 
     background: #000; 
@@ -28,7 +29,7 @@ body {
     scroll-behavior: smooth; 
     overflow-x: hidden; 
     width: 100%;
-    scrollbar-gutter: stable;
+    scrollbar-gutter: stable; 
 }
 
 /* 1. BACKGROUND FADE SYSTEM */
@@ -145,6 +146,7 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
+/* High-performance settings for 3D Viewer */
 model-viewer { 
     width: 100%; 
     height: 100%; 
@@ -234,7 +236,7 @@ model-viewer {
 }
 .pop-projects-btn.visible { opacity: 1; transform: translateX(0); pointer-events: all; }
 
-/* UP BUTTON - POSITIONED ON RIGHT */
+/* UP BUTTON - POSITIONED ON RIGHT SIDE */
 .up-btn {
     position: fixed;
     bottom: 30px;
@@ -258,7 +260,10 @@ model-viewer {
     transition: all 0.4s ease;
 }
 .up-btn.visible { opacity: 1; visibility: visible; transform: translateY(0); }
-.up-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); }
+.up-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+}
 
 .nav-overlay {
     position: fixed; 
@@ -315,6 +320,7 @@ model-viewer {
         <a href="changelog.html" onclick="toggleMenu()" style="font-size: 18px; color: var(--accent); opacity: 0.8;">CHANGELOG</a>
     </div>
 
+    <!-- Section 1 -->
     <section class="hero" id="home">
         <div class="left-panel">
             <div class="logo">RAJAN JAIN</div>
@@ -333,6 +339,7 @@ model-viewer {
         </div>
     </section>
 
+    <!-- Section 2 -->
     <section class="about-section" id="about">
         <div class="about-card">
             <div>
@@ -357,6 +364,7 @@ model-viewer {
         </div>
     </section>
 
+    <!-- Section 3 -->
     <section class="showcase" id="aircraft">
         <div class="showcase-header">
             <h2 id="ver-title">ARC KNIGHT MK3</h2>
@@ -374,12 +382,14 @@ model-viewer {
             <p id="spec-desc">Iteration 3: Optimized high-efficiency winglets added to wingtips for induced drag reduction.</p>
         </div>
 
+        <!-- Optimized for high refresh rate and discrete GPU -->
         <model-viewer id="view" 
             src="images/Arc Knight Mk3.gltf" 
             auto-rotate 
             shadow-intensity="0.5" 
             exposure="0.55"
-            loading="lazy"
+            loading="eager"
+            power-preference="high-performance"
             camera-orbit="290deg 75deg 2.1m"
             field-of-view="30deg"
             interpolation-decay="200">
@@ -414,20 +424,21 @@ model-viewer {
             document.querySelectorAll('.ver-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
-            // Logic to prevent camera sticking:
-            // 1. Force state reset
             currentActivePart = null;
             document.querySelectorAll('.part-card').forEach(c => c.classList.remove('active'));
             viewer.removeAttribute('camera-controls');
             viewer.autoRotate = true;
 
-            // 2. Set listener to hard-reset camera coordinates ONLY once the new model loads
+            // Immediate camera reset to prevent sticking before src change
+            viewer.cameraOrbit = "290deg 75deg 2.1m";
+            viewer.cameraTarget = "0.15m 0.1m 0m";
+
+            // Event listener ensures new model loads with correct alignment
             viewer.addEventListener('load', () => {
                 viewer.cameraOrbit = "290deg 75deg 2.1m";
                 viewer.cameraTarget = "0.15m 0.1m 0m";
             }, { once: true });
 
-            // 3. Swap the source and update text
             viewer.src = aircraftData[ver].src;
             document.getElementById('ver-title').innerText = aircraftData[ver].title;
             document.getElementById('spec-title').innerText = ver.toUpperCase() + ' Design Specs';
