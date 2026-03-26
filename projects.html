@@ -6,18 +6,29 @@
 <title>Projects | Rajan Jain</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
+    /* Optimization: Enable smooth scrolling at browser level */
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
     
     body { 
         background: #0f172a url("images/project_bg.jpg") center/cover no-repeat fixed; 
         color: white; 
         min-height: 100vh;
+        overflow-x: hidden;
     }
 
     .overlay {
         background: rgba(13, 21, 38, 0.8);
-        backdrop-filter: blur(2px);
+        /* Optimization: GPU acceleration for backdrop filters */
+        backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
+        will-change: backdrop-filter;
         min-height: 100vh;
         width: 100%;
     }
@@ -26,9 +37,12 @@
     
     .back-btn { 
         display: inline-block; color: #fff; text-decoration: none; 
-        margin-bottom: 40px; opacity: 0.7; transition: 0.3s; font-weight: 600;
+        margin-bottom: 40px; opacity: 0.7; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        font-weight: 600;
+        /* Optimization: Force GPU layer */
+        transform: translateZ(0);
     }
-    .back-btn:hover { opacity: 1; transform: translateX(-5px); }
+    .back-btn:hover { opacity: 1; transform: translateX(-5px) translateZ(0); }
 
     header h1 { 
         font-size: 45px; margin-bottom: 40px; border-bottom: 2px solid rgba(255,255,255,0.1); 
@@ -53,14 +67,23 @@
         border-radius: 15px; 
         border: 1px solid rgba(255,255,255,0.1); 
         backdrop-filter: blur(5px);
-        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        /* Optimization: High-performance transition curve */
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                    background 0.3s ease, 
+                    border-color 0.3s ease; 
         display: flex;
         flex-direction: column;
         height: 100%;
+        /* Optimization: Pre-allocate GPU layer for smooth 120Hz+ hover */
+        will-change: transform;
+        transform: translateZ(0);
+        backface-visibility: hidden;
     }
+
     .project-link:hover .card { 
         background: rgba(255,255,255,0.08); 
-        transform: translateY(-8px); 
+        /* Optimization: Use translate3d for max refresh rate efficiency */
+        transform: translateY(-8px) translate3d(0,0,0); 
         border-color: #7fb3b3;
     }
 
@@ -69,13 +92,26 @@
     .card .tag { font-size: 10px; text-transform: uppercase; color: #7fb3b3; font-weight: bold; margin-bottom: 8px; }
 
     /* SHOW MORE LOGIC */
-    #extra-projects { display: none; margin-top: 25px; }
+    #extra-projects { 
+        display: none; 
+        margin-top: 25px; 
+        /* Optimization: Ensure grid items fade in smoothly */
+        animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
     .btn-container { text-align: center; margin-top: 40px; }
     .show-more-btn {
         background: transparent; border: 1px solid #7fb3b3; color: #7fb3b3;
-        padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: 0.3s;
+        padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 600; 
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateZ(0);
     }
-    .show-more-btn:hover { background: #7fb3b3; color: #0f172a; }
+    .show-more-btn:hover { background: #7fb3b3; color: #0f172a; transform: scale(1.05); }
 
     @media(max-width: 768px) { header h1 { font-size: 32px; } }
 </style>
@@ -218,18 +254,28 @@
 </div>
 
 <script>
+    /**
+     * Optimization: requestAnimationFrame ensures that the 
+     * DOM changes happen exactly when the monitor is ready for a new frame.
+     */
     function toggleProjects() {
         const extraProjects = document.getElementById("extra-projects");
         const btn = document.getElementById("toggleBtn");
 
-        if (extraProjects.style.display === "grid") {
-            extraProjects.style.display = "none";
-            btn.innerHTML = "View More Projects";
-        } else {
-            extraProjects.style.display = "grid";
-            btn.innerHTML = "View Less";
-            extraProjects.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        window.requestAnimationFrame(() => {
+            if (extraProjects.style.display === "grid") {
+                extraProjects.style.display = "none";
+                btn.innerHTML = "View More Projects";
+            } else {
+                extraProjects.style.display = "grid";
+                btn.innerHTML = "View Less";
+                
+                // Smooth scroll optimization
+                setTimeout(() => {
+                    extraProjects.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 10);
+            }
+        });
     }
 </script>
 
