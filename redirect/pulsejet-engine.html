@@ -3,282 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Projects | Rajan Jain</title>
+<title>Lockwood-Hiller Pulsejet | Rajan Jain</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-    /* High Refresh Rate Smoothness Optimization */
-    html {
-        scroll-behavior: smooth;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-rendering: optimizeLegibility;
-    }
-
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-
-    body {
-        background: #0f172a;
-        color: white;
-        min-height: 100vh;
-        overflow-x: hidden;
-    }
-
-    /* GPU-Accelerated Background: Prevents lag during scrolling on 144Hz displays */
-    body::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background: url("images/project_bg.jpg") center / cover no-repeat;
-        z-index: -1;
-        will-change: transform;
-        transform: translate3d(0,0,0);
-    }
-
-    .overlay {
-        background: rgba(10, 17, 33, 0.88);
-        min-height: 100vh;
-        width: 100%;
-    }
-
-    .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
-
-    .back-btn {
-        display: inline-block; color: #fff; text-decoration: none;
-        margin-bottom: 40px; opacity: 0.7;
-        transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        font-weight: 600;
-        transform: translate3d(0,0,0);
-    }
-    .back-btn:hover { opacity: 1; transform: translateX(-5px) translate3d(0,0,0); }
-
-    header h1 {
-        font-size: 45px; margin-bottom: 40px; border-bottom: 2px solid rgba(255,255,255,0.1);
-        padding-bottom: 10px; letter-spacing: 2px;
-    }
-
-    section { margin-bottom: 60px; }
-    h2 { font-size: 24px; margin-bottom: 25px; color: #7fb3b3; text-transform: uppercase; letter-spacing: 2px; }
-
-    /* GRID SYSTEM */
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 25px;
-    }
-
-    .project-link { text-decoration: none; color: inherit; display: block; }
-
-    /* Card Optimization: Hardware acceleration for silky smooth hover */
-    .card {
-        background: rgba(15, 25, 50, 0.55);
-        padding: 30px;
-        border-radius: 15px;
-        border: 1px solid rgba(255,255,255,0.13);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                    background 0.3s ease,
-                    border-color 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        will-change: transform;
-        transform: translate3d(0,0,0);
-        backface-visibility: hidden;
-    }
-
-    .project-link:hover .card {
-        background: rgba(20, 35, 65, 0.7);
-        transform: translateY(-8px) translate3d(0,0,0);
-        border-color: #7fb3b3;
-    }
-
-    .card h3 { margin-bottom: 12px; color: #fff; font-size: 19px; font-weight: 600; }
-    .card p { font-size: 14px; opacity: 0.8; line-height: 1.6; margin-bottom: 15px; }
-    .card .tag { font-size: 10px; text-transform: uppercase; color: #7fb3b3; font-weight: bold; margin-bottom: 8px; }
-
-    /* SHOW MORE ANIMATION */
-    #extra-projects {
-        display: none;
-        margin-top: 25px;
-        animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .btn-container { text-align: center; margin-top: 40px; }
-    .show-more-btn {
-        background: transparent; border: 1px solid #7fb3b3; color: #7fb3b3;
-        padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 600;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .show-more-btn:hover { background: #7fb3b3; color: #0f172a; transform: scale(1.05); }
-
-    @media(max-width: 768px) { header h1 { font-size: 32px; } }
+    body { background: #0f172a; color: white; min-height: 100vh; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+    .back-btn { color: #7fb3b3; text-decoration: none; display: inline-block; margin-bottom: 30px; }
+    .card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+    h1 { color: #7fb3b3; margin-bottom: 10px; }
+    h2 { font-size: 20px; margin: 20px 0; color: #7fb3b3; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
+    .spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    .spec-item b { color: #7fb3b3; display: block; font-size: 12px; text-transform: uppercase; }
+    .linkedin-btn { display: inline-block; background: #0077b5; color: white; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 20px; }
+    p { line-height: 1.6; opacity: 0.9; margin-bottom: 15px; }
 </style>
 </head>
 <body>
-
-<div class="overlay">
     <div class="container">
-        <a href="/" class="back-btn">← Back to Home</a>
+        <a href="../projects.html" class="back-btn">← Back to Projects</a>
+        <h1>Lockwood–Hiller Pulsejet Engine</h1>
+        <p>Valveless propulsion design and CFD analysis using SolidWorks Flow Simulation.</p>
 
-        <header>
-            <h1>Engineering Projects</h1>
-        </header>
-
-        <!-- FEATURED PROJECTS -->
-        <section>
-            <h2>Featured Work</h2>
-            <div class="grid">
-
-                <a href="/#aircraft" class="project-link">
-                    <div class="card">
-                        <span class="tag">UAV & 3D Interactive</span>
-                        <h3>Arcknight (Fixed-Wing UAV Design)</h3>
-                        <p>Conceptual design including wing loading and CFD-based aerodynamic and structural analysis. View the interactive model on the home page.</p>
-                    </div>
-                </a>
-
-                <a href="redirect/submarine.html" class="project-link">
-                    <div class="card">
-                        <span class="tag">Marine Hydrodynamics</span>
-                        <h3>Advanced Submarine Propulsion</h3>
-                        <p>Ongoing research into counter-rotating propeller configurations for wake reduction. Performing CFD simulations for hydrodynamic performance up to 1000m depth.</p>
-                    </div>
-                </a>
-
-                <!-- CORRECTED URL: Matches your GitHub pulsejet-engine.html -->
-                <a href="redirect/pulsejet-engine.html" class="project-link">
-                    <div class="card">
-                        <span class="tag">Propulsion</span>
-                        <h3>Lockwood–Hiller Pulsejet Engine</h3>
-                        <p>Designed a valveless pulsejet engine based on classical geometry. Performed internal flow analyses using SolidWorks Flow Simulation.</p>
-                    </div>
-                </a>
-
+        <div class="card">
+            <h2>Computational Solver Settings</h2>
+            <div class="spec-grid">
+                <div class="spec-item"><b>Time Step</b>0.0001 s (Manual)</div>
+                <div class="spec-item"><b>Physical Time</b>0.1 s</div>
+                <div class="spec-item"><b>Nested Iterations</b>10</div>
+                <div class="spec-item"><b>Residuals</b>0.005 (Mass/Mom/Energy)</div>
             </div>
+        </div>
 
-            <!-- HIDDEN PROJECTS REVEALED ON CLICK -->
-            <div id="extra-projects" class="grid">
+        <div class="card">
+            <h2>Geometry Analysis</h2>
+            <p>Total Length: 833.00mm | Combustion Chamber: 237.00mm | Intake: 267.00mm</p>
+            <p>Performed transient flow analysis to capture pressure oscillations and mass flow goals. SG Mass Flow Rate 2 achieved at Iteration 199.</p>
+        </div>
 
-                <a href="redirect/avionics.html" class="project-link">
-                    <div class="card">
-                        <span class="tag">Electronics & Avionics</span>
-                        <h3>Rocket Avionics & Static Test Stand</h3>
-                        <p>Serving as Head of Avionics for Team Agnipaksha. Designed optimized electronics for rocket flight computers and test stand instrumentation.</p>
-                    </div>
-                </a>
-
-                <a href="redirect/ld-calculator.html" class="project-link">
-                    <div class="card">
-                        <span class="tag">Python Programming / AI</span>
-                        <h3>Custom Lift-to-Drag (L/D) Calculator</h3>
-                        <p>Developing a Python-based tool with AI to estimate aircraft L/D ratios directly from 3D geometry models.</p>
-                    </div>
-                </a>
-
-                <a href="redirect/tbcc.html" class="project-link">
-                    <div class="card">
-                        <span class="tag">Supersonic Aero</span>
-                        <h3>Ramjet-Augmented TBCC Inlet</h3>
-                        <p>Conceptual study of supersonic inlet flow physics, focusing on shock control and compression mechanisms.</p>
-                    </div>
-                </a>
-
-                <a href="redirect/stealth.html" class="project-link">
-                    <div class="card">
-                        <span class="tag">Stealth Technology</span>
-                        <h3>Supersonic Stealth Bomber Concept</h3>
-                        <p>Geometric shaping for Radar Cross Section (RCS) reduction, inspired by the Lockheed Martin Hopeless Diamond.</p>
-                    </div>
-                </a>
-
-                <a href="redirect/drone.html" class="project-link">
-                    <div class="card">
-                        <span class="tag">Robotics</span>
-                        <h3>Aerothon Drone Design</h3>
-                        <p>Designed landing gear, electronics integration, and gripper mechanisms for mission-specific drone performance.</p>
-                    </div>
-                </a>
-
-                <a href="redirect/landing-gear.html" class="project-link">
-                    <div class="card">
-                        <span class="tag">Structures</span>
-                        <h3>Heavy Bomber Landing Gear Design</h3>
-                        <p>Created landing gear assemblies inspired by heavy cargo architectures, focusing on load distribution stability.</p>
-                    </div>
-                </a>
-
-                <a href="redirect/cad-portfolio.html" class="project-link">
-                    <div class="card">
-                        <span class="tag">CAD / CAE</span>
-                        <h3>Multi-Configuration Aircraft Design</h3>
-                        <p>Created a range of designs from basic trainer aircraft to sophisticated configurations using professional CAD suites.</p>
-                    </div>
-                </a>
-
-            </div>
-
-            <div class="btn-container">
-                <button class="show-more-btn" id="toggleBtn" onclick="toggleProjects()">View More Projects</button>
-            </div>
-        </section>
-
-        <!-- ACHIEVEMENTS & CERTIFICATIONS -->
-        <section>
-            <div class="grid">
-                <div class="card">
-                    <h2>Achievements</h2>
-                    <ul style="list-style: '✈  '; padding-left: 20px; font-size: 14px; opacity: 0.9;">
-                        <li>Phase 2 Qualifier: Aerothon 2025</li>
-                        <li>Shortlisted for NIDAR 2025</li>
-                        <li>Head of Avionics - Team Agnipaksha</li>
-                        <li>RC Aircraft Flight Testing & Piloting</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h2>Certifications</h2>
-                    <ul style="list-style: '✈  '; padding-left: 20px; font-size: 14px; opacity: 0.9;">
-                        <li>Aerospace Vehicle Design (NPTEL)</li>
-                        <li>Gas Turbine Technology Workshop</li>
-                        <li>NIDAR & Aerothon Participation</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
+        <a href="https://www.linkedin.com/posts/rajan-jain-b55457289_aerospaceengineering-cfd-solidworks-ugcPost-7433207889575690240-7lQc" target="_blank" class="linkedin-btn">View Full Analysis on LinkedIn</a>
     </div>
-</div>
-
-<script>
-    /**
-     * Use requestAnimationFrame to ensure the DOM update is synced 
-     * with the device refresh rate (60Hz, 120Hz, 144Hz etc).
-     */
-    function toggleProjects() {
-        const extraProjects = document.getElementById("extra-projects");
-        const btn = document.getElementById("toggleBtn");
-
-        window.requestAnimationFrame(() => {
-            if (extraProjects.style.display === "grid") {
-                extraProjects.style.display = "none";
-                btn.innerHTML = "View More Projects";
-            } else {
-                extraProjects.style.display = "grid";
-                btn.innerHTML = "View Less";
-
-                // Smooth scroll sync
-                setTimeout(() => {
-                    extraProjects.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 10);
-            }
-        });
-    }
-</script>
-
 </body>
 </html>
