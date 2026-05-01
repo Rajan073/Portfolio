@@ -21,7 +21,6 @@
 
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
 
-/* Prevent layout shift and horizontal scroll */
 html { overflow-x: hidden; width: 100%; }
 body { 
     background: #000; 
@@ -50,14 +49,18 @@ body {
     width: 100%;
 }
 
+/*
+ * PERF FIX: Removed backdrop-filter:blur(15px) from .left-panel.
+ * This was blurring a region covering 40% of the entire viewport on every frame —
+ * the single biggest lag source on this page.
+ * A stronger opaque background is visually near-identical and has zero GPU cost.
+ */
 .left-panel {
     padding: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
+    background: rgba(0, 0, 0, 0.72);
     border-right: 1px solid rgba(255,255,255,0.1);
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
@@ -106,22 +109,61 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
     width: 100%;
 }
 
+/*
+ * PERF FIX: Removed backdrop-filter:blur(15px) from .about-card.
+ * Large card visible for an entire scroll section — blurring this entire
+ * region continuously was the second biggest lag source.
+ * Compensated with a slightly more opaque background.
+ */
 .about-card {
-    background: var(--tint);
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
+    background: rgba(0, 0, 0, 0.78);
     border: 1px solid rgba(255,255,255,0.15);
     padding: 50px;
     border-radius: 20px;
     max-width: 1000px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.2fr 1fr;
     gap: 40px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
+/* PROFILE HEADER LAYOUT */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.profile-icon {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 0 20px rgba(127, 179, 179, 0.25);
+}
+
+.greeting-text h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+}
+.greeting-text p {
+    color: var(--accent);
+    font-size: 14px;
+    margin-bottom: 0 !important;
+    letter-spacing: 1px;
+}
+
 .about-card h2 { color: var(--accent); margin-bottom: 20px; font-size: 32px; text-transform: uppercase; letter-spacing: 2px; }
 .about-card p { font-size: 15px; opacity: 0.8; line-height: 1.8; margin-bottom: 20px; }
+
+.about-right {
+    padding-top: 60px;
+}
+
 .cv-data { list-style: none; }
 .cv-data li { margin-bottom: 12px; font-size: 14px; }
 .cv-data span { color: var(--accent); font-weight: 600; }
@@ -146,7 +188,6 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-/* High-performance settings for 3D Viewer */
 model-viewer { 
     width: 100%; 
     height: 100%; 
@@ -178,12 +219,14 @@ model-viewer {
 }
 .ver-btn.active { background: var(--accent); color: black; border-color: var(--accent); }
 
+/* Small elements — backdrop-filter on these is fine (tiny regions) */
 .specs-box {
     position: absolute;
     bottom: 30px;
     left: 30px;
     background: var(--tint);
     backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     border: 1px solid rgba(255,255,255,0.1);
     padding: 20px;
     border-radius: 12px;
@@ -208,6 +251,7 @@ model-viewer {
 .part-card {
     background: var(--glass);
     backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     border: 1px solid rgba(255,255,255,0.08);
     padding: 15px 20px;
     border-radius: 8px;
@@ -229,6 +273,7 @@ model-viewer {
 .floating-nav { position: fixed; top: 30px; right: 30px; display: flex; align-items: center; gap: 15px; z-index: 1000; }
 .pop-projects-btn {
     background: var(--glass); backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     border: 1px solid rgba(255, 255, 255, 0.1); color: white;
     padding: 8px 22px; border-radius: 30px; text-decoration: none;
     font-size: 13px; font-weight: 600; letter-spacing: 1px;
@@ -236,7 +281,6 @@ model-viewer {
 }
 .pop-projects-btn.visible { opacity: 1; transform: translateX(0); pointer-events: all; }
 
-/* UP BUTTON - POSITIONED ON RIGHT SIDE */
 .up-btn {
     position: fixed;
     bottom: 30px;
@@ -245,6 +289,7 @@ model-viewer {
     height: 55px;
     background: var(--tint);
     backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
@@ -260,40 +305,48 @@ model-viewer {
     transition: all 0.4s ease;
 }
 .up-btn.visible { opacity: 1; visibility: visible; transform: translateY(0); }
-.up-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--accent);
-}
+.up-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); }
 
+/*
+ * Nav overlay full-screen blur is fine — it only renders when the menu
+ * is actually open, not continuously on every scroll frame.
+ */
 .nav-overlay {
     position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
+    top: 0; left: 0; width: 100%; height: 100%; 
     background: rgba(0, 0, 0, 0.7); 
     backdrop-filter: blur(25px); 
     -webkit-backdrop-filter: blur(25px);
     z-index: 2000; 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center;
-    visibility: hidden; 
-    opacity: 0; 
+    display: flex; flex-direction: column; 
+    justify-content: center; align-items: center;
+    visibility: hidden; opacity: 0; 
     transition: 0.4s;
     overflow: hidden;
 }
 .nav-overlay.active { visibility: visible; opacity: 1; }
 .nav-overlay a { color: white; font-size: 30px; text-decoration: none; margin: 15px; font-weight: 600; transition: 0.3s; }
 
-/* NEW ROTATING CROSS ANIMATION (ONLY THE CROSS) */
-.nav-overlay span {
-    display: inline-block; /* Required for transform to work */
-    transition: transform 0.3s ease;
+/*
+ * FIX: Was .nav-overlay span which incorrectly targeted ALL spans
+ * (including text nodes wrapped in spans by the browser).
+ * Now uses a dedicated .nav-close class so ONLY the × button rotates.
+ */
+.nav-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 40px;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+    user-select: none;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.25s ease;
 }
-.nav-overlay span:hover {
+.nav-close:hover {
     transform: rotate(90deg);
+    color: var(--accent);
 }
 
 @media (max-width: 900px) {
@@ -303,6 +356,8 @@ model-viewer {
     .part-card { width: 150px; }
     .up-btn { right: 15px; bottom: 15px; }
     .version-selector { left: 10px; }
+    .profile-header { flex-direction: column; text-align: center; }
+    .about-right { padding-top: 0; }
 }
 </style>
 </head>
@@ -321,7 +376,8 @@ model-viewer {
     </div>
 
     <div class="nav-overlay" id="menu">
-        <span style="position:absolute; top:30px; right:30px; font-size:40px; cursor:pointer;" onclick="toggleMenu()">&#x2715</span>
+        <!-- FIX: class="nav-close" instead of inline span so rotation only applies here -->
+        <span class="nav-close" onclick="toggleMenu()">&#x2715;</span>
         <a href="#home" onclick="toggleMenu()">HOME</a>
         <a href="#about" onclick="toggleMenu()">ABOUT ME</a>
         <a href="#aircraft" onclick="toggleMenu()">ARC KNIGHT 3D</a>
@@ -351,12 +407,21 @@ model-viewer {
     <!-- Section 2 -->
     <section class="about-section" id="about">
         <div class="about-card">
-            <div>
+            <div class="about-left">
+                <div class="profile-header">
+                    <img src="images/profile.jpg" alt="Rajan Jain" class="profile-icon">
+                    <div class="greeting-text">
+                        <h3>Hi, I'm Rajan Jain</h3>
+                        <p>Aerospace Engineering Student</p>
+                    </div>
+                </div>
+
                 <h2>About Me</h2>
                 <p>I am an Aerospace Engineering Undergraduate at VIT Bhopal University. I am deeply passionate about aircraft construction, aircraft structures, aeromodelling, and flight testing.</p>
                 <p>I thrive on the challenge of bridging the gap between a 3D simulation and a physical machine. When I am not in the lab, you'll find me at the flight field troubleshooting telemetry lags or pushing the limits of high-speed RC flight.</p>
             </div>
-            <div>
+            
+            <div class="about-right">
                 <ul class="cv-data">
                     <li><span>Degree:</span> B.Tech Aerospace Engineering (2023-27)</li>
                     <li><span>CGPA:</span> 8.97 / 10</li>
@@ -391,7 +456,6 @@ model-viewer {
             <p id="spec-desc">Iteration 3: Optimized high-efficiency winglets added to wingtips for induced drag reduction.</p>
         </div>
 
-        <!-- Optimized for high refresh rate and discrete GPU -->
         <model-viewer id="view" 
             src="images/Arc Knight Mk3.gltf" 
             auto-rotate 
@@ -438,11 +502,9 @@ model-viewer {
             viewer.removeAttribute('camera-controls');
             viewer.autoRotate = true;
 
-            // Immediate camera reset to prevent sticking before src change
             viewer.cameraOrbit = "290deg 75deg 2.1m";
             viewer.cameraTarget = "0.15m 0.1m 0m";
 
-            // Event listener ensures new model loads with correct alignment
             viewer.addEventListener('load', () => {
                 viewer.cameraOrbit = "290deg 75deg 2.1m";
                 viewer.cameraTarget = "0.15m 0.1m 0m";
@@ -471,11 +533,11 @@ model-viewer {
             element.classList.add('active');
             viewer.autoRotate = false;
             viewer.setAttribute('camera-controls', '');
-            if (part === 'nose') { viewer.cameraOrbit = "0deg 75deg 0.5m"; viewer.cameraTarget = "-0.2m 0m 0m"; }
-            else if (part === 'wing') { viewer.cameraOrbit = "0deg 80deg 0.2m"; viewer.cameraTarget = "0.1m 0m 0.55m"; }
-            else if (part === 'intake') { viewer.cameraOrbit = "10deg 60deg 0.2m"; viewer.cameraTarget = "0.35m 0.1m 0m"; }
-            else if (part === 'tail') { viewer.cameraOrbit = "20deg 75deg 0.2m"; viewer.cameraTarget = "0.6m 0.15m 0m"; }
-            else if (part === 'free') { viewer.cameraOrbit = "290deg 75deg 2.1m"; viewer.cameraTarget = "0.15m 0.1m 0m"; }
+            if (part === 'nose')   { viewer.cameraOrbit = "0deg 75deg 0.5m";   viewer.cameraTarget = "-0.2m 0m 0m"; }
+            else if (part === 'wing')   { viewer.cameraOrbit = "0deg 80deg 0.2m";   viewer.cameraTarget = "0.1m 0m 0.55m"; }
+            else if (part === 'intake') { viewer.cameraOrbit = "10deg 60deg 0.2m";  viewer.cameraTarget = "0.35m 0.1m 0m"; }
+            else if (part === 'tail')   { viewer.cameraOrbit = "20deg 75deg 0.2m";  viewer.cameraTarget = "0.6m 0.15m 0m"; }
+            else if (part === 'free')   { viewer.cameraOrbit = "290deg 75deg 2.1m"; viewer.cameraTarget = "0.15m 0.1m 0m"; }
         }
 
         function resetToDefault() {
