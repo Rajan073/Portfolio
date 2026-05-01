@@ -5,17 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pulsejet CFD Analysis | Rajan Jain</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<!-- Model Viewer for the 3D GLTF Model -->
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
 <style>
-    /* High Refresh Rate Optimizations */
     html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-    
-    body { 
-        background: #0f172a; 
-        color: white; 
+
+    body {
+        background: #0f172a;
+        color: white;
         overflow-x: hidden;
         line-height: 1.6;
     }
@@ -29,22 +27,19 @@
 
     .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
 
-    /* Navigation */
-    .back-btn { 
-        display: inline-flex; align-items: center; color: #7fb3b3; text-decoration: none; 
-        margin-bottom: 30px; font-weight: 600; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        transform: translateZ(0);
+    /* FIX: Removed conflicting static transform on back-btn */
+    .back-btn {
+        display: inline-flex; align-items: center; color: #7fb3b3; text-decoration: none;
+        margin-bottom: 30px; font-weight: 600; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
     }
     .back-btn:hover { transform: translateX(-5px); color: #fff; }
 
-    /* Header */
     header { margin-bottom: 50px; }
     header h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 700; color: #fff; line-height: 1.2; }
     .tagline { color: #7fb3b3; text-transform: uppercase; letter-spacing: 3px; font-size: 14px; font-weight: 600; margin-bottom: 10px; display: block; }
 
-    /* Hero Section: 3D Model & Video */
     .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; margin-bottom: 40px; }
-    
+
     model-viewer {
         width: 100%; height: 500px; background: rgba(255,255,255,0.02);
         border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
@@ -56,35 +51,39 @@
     }
     .video-card video { width: 100%; height: 100%; object-fit: cover; }
 
-    /* Content Cards */
+    /*
+     * PERF FIX: Removed will-change and static translate3d from cards —
+     * these were creating GPU layers for every card even when not animating.
+     * backdrop-filter on small cards is fine (unlike full-viewport blur).
+     * FIX: Removed conflicting static transform — JS animation handles it cleanly.
+     */
     .card {
         background: rgba(255,255,255,0.03); padding: 40px; border-radius: 24px;
         border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(12px);
-        margin-bottom: 30px; will-change: transform; transform: translate3d(0,0,0);
+        -webkit-backdrop-filter: blur(12px);
+        margin-bottom: 30px;
     }
 
     h2 { color: #7fb3b3; font-size: 24px; margin-bottom: 20px; }
     p { opacity: 0.85; margin-bottom: 20px; font-size: 16px; }
 
-    /* Technical Insights Grid */
     .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
     .insight-item { background: rgba(255,255,255,0.02); padding: 25px; border-radius: 15px; border: 1px solid rgba(127, 179, 179, 0.1); }
     .insight-item h3 { color: #fff; font-size: 18px; margin-bottom: 10px; }
     .insight-item span { color: #7fb3b3; font-weight: 700; font-size: 20px; display: block; margin-bottom: 5px; }
 
-    /* Results Gallery */
     .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 30px; }
-    .gallery-img { 
-        width: 100%; border-radius: 12px; cursor: zoom-in; 
-        transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);
+    .gallery-img {
+        width: 100%; border-radius: 12px; cursor: zoom-in;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+        border: 1px solid rgba(255,255,255,0.1);
     }
     .gallery-img:hover { transform: scale(1.02); border-color: #7fb3b3; }
 
-    /* Linked In Button */
     .linkedin-btn {
         display: inline-block; background: #0077b5; color: white; padding: 15px 35px;
         border-radius: 50px; text-decoration: none; font-weight: 700; margin-top: 20px;
-        transition: 0.3s;
+        transition: background 0.3s ease, transform 0.3s ease;
     }
     .linkedin-btn:hover { background: #00a0dc; transform: translateY(-3px); }
 
@@ -101,17 +100,22 @@
         <h1>Lockwood-Hiller Pulsejet Simulation</h1>
     </header>
 
-    <!-- 3D MODEL & ANIMATION SECTION -->
+    <!-- 3D MODEL & VIDEO -->
+    <!--
+        FIX 1: Added ../ prefix — this file lives in redirect/, so assets are one level up.
+        FIX 2: URL-encoded all filenames with spaces/parentheses:
+               spaces → %20,  ( → %28,  ) → %29
+    -->
     <section class="hero-grid">
-        <model-viewer 
-            src="images/pulsejet/Pulsejet.gltf" 
-            alt="3D Pulsejet Model" 
+        <model-viewer
+            src="../images/pulsejet/Pulsejet.gltf"
+            alt="3D Pulsejet Model"
             auto-rotate camera-controls shadow-intensity="1">
         </model-viewer>
-        
+
         <div class="video-card">
             <video autoplay loop muted playsinline>
-                <source src="images/pulsejet/Pulse Jet animation 1.mp4" type="video/mp4">
+                <source src="../images/pulsejet/Pulse%20Jet%20animation%201.mp4" type="video/mp4">
             </video>
         </div>
     </section>
@@ -157,22 +161,22 @@
     <!-- DATA & RESULTS -->
     <section class="card">
         <h2>Simulation Data & Post-Processing</h2>
-        <p>Total Physical Time: 0.1 seconds (Capturing roughly 10-15 full cycles). I successfully observed the "vortex crossing" at the exhaust—a classic indicator of the pulsejet’s unique reverse-flow breathing cycle.</p>
-        
+        <p>Total Physical Time: 0.1 seconds (Capturing roughly 10-15 full cycles). I successfully observed the "vortex crossing" at the exhaust—a classic indicator of the pulsejet's unique reverse-flow breathing cycle.</p>
+
         <div class="gallery">
-            <!-- Contour Plots -->
-            <img src="images/pulsejet/image.png" alt="CFD Contour Plot" class="gallery-img">
-            <img src="images/pulsejet/image (1).png" alt="Pressure Gradient" class="gallery-img">
-            <img src="images/pulsejet/image (2).png" alt="Velocity Vectors" class="gallery-img">
-            
-            <!-- Solver & Graphs -->
-            <img src="images/pulsejet/Screenshot (969).png" alt="Solver Goals" class="gallery-img">
-            <img src="images/pulsejet/Screenshot (970).png" alt="Convergence Graph" class="gallery-img">
-            <img src="images/pulsejet/Screenshot (971).png" alt="Mass Flow Goal" class="gallery-img">
+            <!-- FIX: All paths now use ../ prefix + URL-encoded filenames -->
+            <img src="../images/pulsejet/image.png"           alt="CFD Contour Plot"    class="gallery-img">
+            <img src="../images/pulsejet/image%20%281%29.png" alt="Pressure Gradient"   class="gallery-img">
+            <img src="../images/pulsejet/image%20%282%29.png" alt="Velocity Vectors"    class="gallery-img">
+
+            <img src="../images/pulsejet/Screenshot%20%28969%29.png" alt="Solver Goals"       class="gallery-img">
+            <img src="../images/pulsejet/Screenshot%20%28970%29.png" alt="Convergence Graph"  class="gallery-img">
+            <img src="../images/pulsejet/Screenshot%20%28971%29.png" alt="Mass Flow Goal"     class="gallery-img">
         </div>
 
         <div style="text-align: center; margin-top: 40px;">
-            <a href="https://www.linkedin.com/posts/rajan-jain-b55457289_aerospaceengineering-cfd-solidworks-ugcPost-7433207889575690240-7lQc" target="_blank" class="linkedin-btn">
+            <a href="https://www.linkedin.com/posts/rajan-jain-b55457289_aerospaceengineering-cfd-solidworks-ugcPost-7433207889575690240-7lQc"
+               target="_blank" class="linkedin-btn">
                 View Full Technical Post on LinkedIn
             </a>
         </div>
@@ -200,7 +204,7 @@
 </div>
 
 <script>
-    // Smooth scroll for internal links and card fade-in
+    // Scroll-triggered fade-in for cards
     document.addEventListener('DOMContentLoaded', () => {
         const cards = document.querySelectorAll('.card');
         const observer = new IntersectionObserver((entries) => {
@@ -208,16 +212,17 @@
                 if (entry.isIntersecting) {
                     window.requestAnimationFrame(() => {
                         entry.target.style.opacity = "1";
-                        entry.target.style.transform = "translate3d(0,0,0)";
+                        entry.target.style.transform = "translateY(0)";
                     });
+                    observer.unobserve(entry.target); // Stop watching once visible
                 }
             });
         }, { threshold: 0.1 });
 
         cards.forEach(card => {
             card.style.opacity = "0";
-            card.style.transform = "translate3d(0, 20px, 0)";
-            card.style.transition = "all 0.8s cubic-bezier(0.22, 1, 0.36, 1)";
+            card.style.transform = "translateY(20px)";
+            card.style.transition = "opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)";
             observer.observe(card);
         });
     });
