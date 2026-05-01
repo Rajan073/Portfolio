@@ -245,12 +245,13 @@
                 Loading 3D Model…
             </div>
 
-            <!-- camera-controls REMOVED to prevent interaction -->
             <model-viewer
                 id="pulsjetViewer"
                 src="../images/pulsejet/Pulsejet.gltf"
                 alt="3D Pulsejet Model"
                 auto-rotate
+                camera-orbit="90deg 75deg 1.65m"
+                camera-target="0m 0.1m 0.1m"
                 shadow-intensity="1"
                 loading="eager"
                 reveal="auto">
@@ -361,8 +362,17 @@
 const viewer      = document.getElementById('pulsjetViewer');
 const modelStatus = document.getElementById('modelStatus');
 
+// ===== ZOOM CONTROL =====
+// To adjust zoom: Edit the camera-orbit attribute in the model-viewer element above
+// Format: camera-orbit="0deg 75deg Xm" where X is the distance
+// Smaller value = More Zoomed In (e.g., 0.1m, 0.15m, 0.2m)
+// Bigger value = More Zoomed Out (e.g., 1.0m, 2.0m, 10m)
+// Current: 0.15m (heavily zoomed in)
+// ========================
+
 viewer.addEventListener('load', () => {
     modelStatus.classList.add('hidden');
+    // Camera zoom already set in model-viewer attributes
 });
 
 viewer.addEventListener('error', () => {
