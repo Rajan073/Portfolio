@@ -103,14 +103,13 @@ h1 { font-size: 60px; line-height: 1; margin-bottom: 15px; }
     position: relative;
     display: inline-block;
 }
-.fancy-i::before {
-    content: '✈';
+.fancy-i .plane-dot {
     position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-45deg);
-    font-size: 30px;
-    color: var(--accent);
+    top: -9px;
+    left: 700%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: var(--arrow);
     line-height: 1;
 }
 
@@ -405,7 +404,7 @@ model-viewer {
     <section class="hero" id="home">
         <div class="left-panel">
             <div class="logo">RAJAN JAIN</div>
-            <h1>FL<span class="fancy-i">I</span>GHT<br>DESIGN</h1>
+            <h1>FL<span class="fancy-i"><i class="fa-solid fa-plane-departure plane-dot"></i>I</span>GHT<br>DESIGN</h1>
             <p>Aerospace Engineering student focused on UAV systems, UAV design and Aerospace structures.</p>
             <div class="social-icons">
                 <a href="https://linkedin.com/in/rajan-jain-b55457289/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
