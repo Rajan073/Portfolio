@@ -287,6 +287,15 @@ model-viewer {
 .nav-overlay.active { visibility: visible; opacity: 1; }
 .nav-overlay a { color: white; font-size: 30px; text-decoration: none; margin: 15px; font-weight: 600; transition: 0.3s; }
 
+/* NEW ROTATING CROSS ANIMATION (ONLY THE CROSS) */
+.nav-overlay span {
+    display: inline-block; /* Required for transform to work */
+    transition: transform 0.3s ease;
+}
+.nav-overlay span:hover {
+    transform: rotate(90deg);
+}
+
 @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
     .about-card { grid-template-columns: 1fr; }
@@ -353,7 +362,7 @@ model-viewer {
                     <li><span>CGPA:</span> 8.97 / 10</li>
                     <li><span>Leadership:</span> Head of Avionics, Team Agnipaksha</li>
                     <li><span>Key Skills:</span> Python, SolidWorks, ANSYS, MATLAB</li>
-                    <li><span>Interests:</span> UAV Design, Aircraft Design, Structural Analysis, CFD, RC Piloting</li>
+                    <li><span>Interests:</span> UAV Design, CFD, RC Piloting</li>
                 </ul>
                 <br>
                 <a href="#aircraft" class="btn" style="width:100%">Explore 3D Model</a>
