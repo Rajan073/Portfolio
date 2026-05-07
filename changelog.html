@@ -14,7 +14,7 @@
 
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
     body { 
-        background: #000 url("images/changelog_bg.jpg") center/cover no-repeat fixed; 
+        background: #000 url("images/bg.png") center/cover no-repeat fixed; 
         color: white; 
         min-height: 100vh;
     }
@@ -73,18 +73,26 @@
     <div class="container">
         <a href="index.html" class="back-btn">← Back to Portfolio</a>
         <h1>System Changelog</h1>
-        <div class="status">CURRENT BUILD: ALPHA 1.1</div>
+        <div class="status">CURRENT BUILD: ALPHA 1.2</div>
+
+        <!-- ALPHA 1.2 -->
+        <div class="log-entry">
+            <span class="version">Version Alpha 1.2</span>
+            <span class="date">Current</span>
+            <ul>
+                <li><strong>Pulsejet Project Page:</strong> Added dedicated project page with interactive 3D model viewer (free-look toggle, load retry), full-screen lightbox for all CFD images and animation video, and corrected asset paths.</li>
+                <li><strong>Performance & UI Polish:</strong> Sitewide scroll lag eliminated by removing large-area backdrop blurs and fixing background rendering. Added plane departure icon above the T in FLIGHT, and a rotating close button on the nav menu.</li>
+            </ul>
+        </div>
 
         <!-- ALPHA 1.1 -->
         <div class="log-entry">
             <span class="version">Version Alpha 1.1</span>
-            <span class="date">Current</span>
             <ul>
                 <li><strong>Iteration Management System:</strong> Integrated version selector for Arc Knight series (MK1, MK2, MK2.5, MK3).</li>
                 <li><strong>Dynamic Specifications Engine:</strong> Added bottom-left glass panel to display technical design changes per iteration.</li>
                 <li><strong>State Memory:</strong> System now handles model-swapping while preserving camera reset and rotation preferences.</li>
                 <li><strong>Improved Navigation UX:</strong> Added background scrolling freeze while global side-menu is active.</li>
-                <li><strong>Enabled GPU Acceleration:</strong> Utilized to ensure smooth rendering of complex textures and animations, improving overall website performance.</li>
             </ul>
         </div>
 
